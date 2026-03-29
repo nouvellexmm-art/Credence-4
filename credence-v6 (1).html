@@ -1,0 +1,2318 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Credence</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* TOKENS — Moon Night: deep navy + white */
+:root{
+  --blue:#b8d8f8;--blue2:#6aaee8;--bluet:rgba(106,174,232,.08);
+  --grn:#6ee7b7;--amb:#fcd34d;--red:#fca5a5;--vio:#c4b5fd;
+  --grad:linear-gradient(135deg,#2d6caa 0%,#4a90d9 55%,#5fa8f0 100%);
+  --bg:#f0f6ff;--bg2:#deeaf8;--surf:#fff;--surf2:#eaf3fb;
+  --border:rgba(45,108,170,.12);--border2:rgba(45,108,170,.25);
+  --txt:#0c1e35;--txt2:#2d5a88;--muted:#5a7a96;
+  --sh-sm:0 1px 4px rgba(12,30,53,.06),0 2px 10px rgba(12,30,53,.04);
+  --sh-md:0 4px 16px rgba(12,30,53,.1),0 8px 28px rgba(12,30,53,.06);
+  --sh-lg:0 12px 40px rgba(12,30,53,.14);
+  --nav-h:56px;--sb-w:240px;--st-h:46px;--r1:8px;--r2:14px;--r3:20px;
+}
+html.dark{
+  --bg:#0a1525;--bg2:#0f1e35;--surf:#121f38;--surf2:#172540;
+  --border:rgba(106,174,232,.1);--border2:rgba(106,174,232,.2);
+  --txt:#d8eeff;--txt2:#6aaee8;--muted:#3e6080;
+  --sh-sm:0 1px 6px rgba(0,0,0,.5),0 2px 14px rgba(0,0,0,.3);
+  --sh-md:0 4px 20px rgba(0,0,0,.6),0 8px 32px rgba(0,0,0,.35);
+  --sh-lg:0 12px 48px rgba(0,0,0,.75);
+  --grad:linear-gradient(135deg,#2563a8 0%,#3a7fd4 55%,#4d9be8 100%);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}
+/* Star field — only in dark mode */
+html.dark body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(1px 1px at 12% 8%,rgba(255,255,255,.35) 0%,transparent 100%),radial-gradient(1px 1px at 28% 22%,rgba(255,255,255,.22) 0%,transparent 100%),radial-gradient(1px 1px at 44% 6%,rgba(255,255,255,.3) 0%,transparent 100%),radial-gradient(1px 1px at 62% 15%,rgba(255,255,255,.25) 0%,transparent 100%),radial-gradient(1px 1px at 78% 3%,rgba(255,255,255,.2) 0%,transparent 100%),radial-gradient(1px 1px at 91% 18%,rgba(255,255,255,.28) 0%,transparent 100%),radial-gradient(1px 1px at 7% 35%,rgba(255,255,255,.18) 0%,transparent 100%),radial-gradient(1px 1px at 20% 48%,rgba(255,255,255,.2) 0%,transparent 100%),radial-gradient(1px 1px at 35% 38%,rgba(255,255,255,.15) 0%,transparent 100%),radial-gradient(1px 1px at 52% 31%,rgba(255,255,255,.25) 0%,transparent 100%),radial-gradient(1px 1px at 68% 42%,rgba(255,255,255,.18) 0%,transparent 100%),radial-gradient(1px 1px at 83% 28%,rgba(255,255,255,.22) 0%,transparent 100%),radial-gradient(1px 1px at 95% 36%,rgba(255,255,255,.17) 0%,transparent 100%),radial-gradient(1px 1px at 15% 62%,rgba(255,255,255,.14) 0%,transparent 100%),radial-gradient(1px 1px at 31% 55%,rgba(255,255,255,.22) 0%,transparent 100%),radial-gradient(1px 1px at 47% 68%,rgba(255,255,255,.14) 0%,transparent 100%),radial-gradient(1px 1px at 60% 58%,rgba(255,255,255,.2) 0%,transparent 100%),radial-gradient(1px 1px at 74% 72%,rgba(255,255,255,.15) 0%,transparent 100%),radial-gradient(1px 1px at 88% 62%,rgba(255,255,255,.25) 0%,transparent 100%),radial-gradient(1px 1px at 5% 82%,rgba(255,255,255,.16) 0%,transparent 100%),radial-gradient(1px 1px at 22% 78%,rgba(255,255,255,.12) 0%,transparent 100%),radial-gradient(1px 1px at 38% 88%,rgba(255,255,255,.2) 0%,transparent 100%),radial-gradient(1px 1px at 56% 81%,rgba(255,255,255,.22) 0%,transparent 100%),radial-gradient(1px 1px at 70% 93%,rgba(255,255,255,.15) 0%,transparent 100%),radial-gradient(1px 1px at 84% 85%,rgba(255,255,255,.18) 0%,transparent 100%),radial-gradient(1px 1px at 96% 78%,rgba(255,255,255,.13) 0%,transparent 100%)}
+h1,h2,h3,h4,h5{font-family:"Lora",serif;line-height:1.15;font-weight:700}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;border:none;background:none;font-family:inherit;font-size:inherit;color:inherit}
+input,textarea,select{font-family:inherit;font-size:.875rem;color:var(--txt);background:var(--surf2);border:1.5px solid var(--border);border-radius:var(--r1);padding:.6rem .95rem;width:100%;outline:none;transition:border-color .2s,box-shadow .2s}
+input:focus,textarea:focus,select:focus{border-color:var(--blue2);box-shadow:0 0 0 3px rgba(200,223,247,.15)}
+select option{background:var(--surf)}
+.hidden{display:none!important}
+.grad-text{background:linear-gradient(135deg,#2d5a8e,#c8dff7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+html.dark .grad-text{background:linear-gradient(135deg,#a0c4ed,#f0f8ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.btn{display:inline-flex;align-items:center;gap:.35rem;padding:.42rem .9rem;border-radius:6px;font-family:"DM Sans",sans-serif;font-weight:600;font-size:.78rem;transition:all .18s;cursor:pointer;white-space:nowrap;letter-spacing:.01em}
+.btn-primary{background:var(--grad);color:#fff;box-shadow:0 2px 8px rgba(30,58,95,.2)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(30,58,95,.32);filter:brightness(1.1)}
+.btn-outline{background:transparent;border:1.5px solid var(--blue2);color:var(--blue2)}
+.btn-outline:hover{background:var(--bluet);transform:translateY(-1px)}
+.btn-ghost{background:var(--surf2);color:var(--txt2);border:1px solid var(--border)}
+.btn-ghost:hover{background:var(--bg2)}
+.btn-sm{padding:.26rem .6rem;font-size:.71rem;gap:.28rem}
+.btn-lg{padding:.58rem 1.4rem;font-size:.84rem}
+.card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);box-shadow:var(--sh-sm)}
+.card-p{padding:1.25rem}
+.badge{display:inline-flex;align-items:center;padding:.12rem .48rem;border-radius:3px;font-size:.62rem;font-weight:600;font-family:"DM Sans",sans-serif;letter-spacing:.04em;text-transform:uppercase}
+.badge-hard{background:rgba(252,165,165,.1);color:var(--red)}
+.badge-medium{background:rgba(252,211,77,.1);color:var(--amb)}
+.badge-easy{background:rgba(110,231,183,.1);color:var(--grn)}
+.badge-pending{background:rgba(180,210,245,.1);color:var(--blue2)}
+.badge-revision{background:rgba(252,165,165,.1);color:var(--red)}
+.badge-approval{background:rgba(196,181,253,.1);color:var(--vio)}
+.badge-active{background:rgba(110,231,183,.1);color:var(--grn)}
+.badge-ai-suggested{background:rgba(129,140,248,.12);color:#a5b4fc}
+.badge-ai-progress{background:rgba(56,189,248,.12);color:#38bdf8}
+.badge-at-risk{background:rgba(251,113,133,.14);color:#fb7185}
+.ai-recommendation{border:1px solid rgba(129,140,248,.35);border-radius:var(--r2);padding:1rem 1.15rem;margin-bottom:1rem;background:rgba(15,23,42,.55);box-shadow:var(--sh-sm)}
+.ai-recommendation-hdr{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.45rem}
+.ai-recommendation .ai-basis{font-size:.68rem;color:var(--muted);line-height:1.45;margin-top:.35rem}
+.ai-ev-panel{margin-top:.75rem;padding:.75rem .85rem;border-radius:var(--r1);border:1px solid rgba(56,189,248,.25);background:rgba(56,189,248,.06);font-size:.72rem;line-height:1.5}
+.ai-at-risk-banner{border:1px solid rgba(251,113,133,.35);border-radius:var(--r2);padding:.85rem 1rem;margin-bottom:1.1rem;background:rgba(251,113,133,.08)}
+.ai-at-risk-banner strong{font-family:"DM Sans",sans-serif;font-size:.78rem}
+ .star-layer{animation:starFlicker 7s ease-in-out infinite alternate}
+@keyframes starFlicker{0%{opacity:.35;transform:translate3d(0,0,0) scale(1)}20%{opacity:1;transform:translate3d(.6px,-.6px,0) scale(1.03)}45%{opacity:.4;transform:translate3d(-.8px,.4px,0) scale(.98)}70%{opacity:.95;transform:translate3d(.4px,.4px,0) scale(1.01)}100%{opacity:.5;transform:translate3d(0,0,0) scale(1)}}
+@keyframes logoFloat{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+.prog-track{height:5px;background:var(--bg2);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;border-radius:3px;background:var(--grad);transition:width .9s cubic-bezier(.4,0,.2,1)}
+.prog-fill-hub{background:linear-gradient(90deg,rgba(251,191,36,.5),rgba(252,211,77,.9))}
+/* NAVBAR */
+.navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 1.75rem;background:rgba(8,14,26,.88);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+html:not(.dark) .navbar{background:rgba(248,250,252,.92);border-bottom:1px solid rgba(30,58,95,.12)}
+.nav-brand{display:flex;align-items:center;gap:.62rem;cursor:pointer}
+.nav-logo{width:32px;height:32px;border-radius:8px;background:var(--grad);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(30,58,95,.3);overflow:hidden}
+.nav-logo img{width:100%;height:100%;object-fit:contain;display:block}
+.nav-logo svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round}
+.nav-title{font-family:"Lora",serif;font-weight:700;font-size:1.1rem;letter-spacing:-.01em}
+.nav-links{display:flex;align-items:center;gap:1.1rem}
+.nav-link{font-weight:500;font-size:.8rem;color:var(--txt2);cursor:pointer;transition:color .2s}
+.nav-link:hover{color:var(--blue)}
+.theme-btn{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--surf2);border:1.5px solid var(--border);color:var(--txt2);transition:all .2s}
+.theme-btn:hover{border-color:var(--blue2);color:var(--blue2)}
+/* STATUSBAR */
+.statusbar{position:fixed;top:var(--nav-h);left:0;right:0;height:var(--st-h);z-index:90;display:flex;align-items:center;justify-content:space-between;padding:0 1rem;background:var(--surf);border-bottom:1px solid var(--border);box-shadow:var(--sh-sm)}
+.sb-left{display:flex;align-items:center;gap:.55rem}
+.sb-right{display:flex;align-items:center;gap:.45rem}
+.menu-btn{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--border);color:var(--muted);transition:all .2s}
+.menu-btn:hover{border-color:var(--blue2);color:var(--blue2)}
+.page-label{font-family:"DM Sans",sans-serif;font-weight:500;font-size:.8rem;color:var(--muted)}
+.pts-chip{display:flex;align-items:center;gap:.28rem;background:rgba(180,210,245,.08);border:1px solid rgba(180,210,245,.15);border-radius:5px;padding:.18rem .65rem;font-family:"DM Sans",sans-serif;font-weight:600;font-size:.72rem;color:var(--blue2)}
+.pts-chip svg{width:9px;height:9px;flex-shrink:0}
+.ico-btn{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--border);color:var(--muted);position:relative;transition:all .2s}
+.ico-btn:hover{border-color:var(--blue2);color:var(--blue2)}
+.notif-dot{position:absolute;top:4px;right:4px;width:6px;height:6px;background:var(--red);border-radius:50%;border:1.5px solid var(--surf)}
+/* SIDEBAR */
+.sb-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .3s}
+.sb-overlay.open{opacity:1;pointer-events:all}
+.sidebar{position:fixed;top:0;left:0;width:var(--sb-w);height:100vh;z-index:210;background:var(--surf);border-right:1px solid var(--border);box-shadow:var(--sh-lg);transform:translateX(-100%);transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;padding:1.2rem .8rem;gap:.1rem;overflow-y:auto}
+.sidebar.open{transform:translateX(0)}
+.sb-head{display:flex;align-items:center;gap:.68rem;padding:.35rem .6rem 1rem;border-bottom:1px solid var(--border);margin-bottom:.6rem}
+.sb-avatar{width:34px;height:34px;border-radius:8px;background:var(--grad);display:flex;align-items:center;justify-content:center;color:#fff;font-family:"DM Sans",sans-serif;font-weight:700;font-size:.84rem;flex-shrink:0;overflow:hidden}
+.sb-uname{font-family:"Lora",serif;font-weight:700;font-size:.86rem;line-height:1.25}
+.sb-urole{font-size:.69rem;color:var(--muted);margin-top:.06rem}
+.sb-item{display:flex;align-items:center;gap:.6rem;padding:.52rem .82rem;border-radius:var(--r1);font-family:"DM Sans",sans-serif;font-weight:500;font-size:.8rem;color:var(--txt2);transition:all .15s;cursor:pointer}
+.sb-item svg{width:13px;height:13px;flex-shrink:0;opacity:.7}
+.sb-item:hover{background:var(--surf2);color:var(--blue2)}
+.sb-item:hover svg{opacity:1}
+.sb-item.active{background:rgba(180,210,245,.08);color:var(--blue2)}
+.sb-item.active svg{opacity:1}
+.sb-signout{margin-top:auto;display:flex;align-items:center;gap:.48rem;padding:.5rem .82rem;border-radius:var(--r1);font-weight:500;font-size:.76rem;color:var(--muted);transition:all .2s;cursor:pointer}
+.sb-signout svg{width:13px;height:13px;opacity:.6}
+.sb-signout:hover{color:var(--red);background:rgba(252,165,165,.06)}
+.sb-signout:hover svg{opacity:1}
+/* PAGE */
+.page-wrap{padding-top:var(--nav-h);min-height:100vh;position:relative;z-index:1}
+.page-wrap.has-sb{padding-top:calc(var(--nav-h) + var(--st-h))}
+.page{display:none;animation:fadeUp .3s ease both}
+.page.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.wrap{max-width:1060px;margin:0 auto;padding:2.25rem 1.5rem}
+.wrap-sm{max-width:500px;margin:0 auto;padding:2.25rem 1.5rem}
+.page-hdr{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-bottom:1.6rem}
+.page-hdr-l h2{font-size:1.3rem;margin-bottom:.12rem;line-height:1.2}
+.page-hdr-l p{color:var(--muted);font-size:.78rem}
+/* LANDING */
+.hero{min-height:calc(100vh - var(--nav-h));display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:3rem 4rem;max-width:10000px;margin:0 auto;position:relative;border-radius:1px;overflow:hidden;background:radial-gradient(circle at 0% 0%,rgba(59,130,246,.18),transparent 60%),radial-gradient(circle at 100% 10%,rgba(129,140,248,.22),transparent 65%),radial-gradient(circle at 50% 120%,rgba(37,99,235,.45),transparent 70%);box-shadow:0 30px 120px rgba(15,23,42,.85)}
+html:not(.dark) .hero{background:radial-gradient(circle at 0% 0%,rgba(59,130,246,.25),transparent 60%),radial-gradient(circle at 100% 10%,rgba(191,219,254,.3),transparent 65%),radial-gradient(circle at 50% 120%,rgba(59,130,246,.4),transparent 70%);box-shadow:0 28px 90px rgba(15,23,42,.55)}
+@media(max-width:768px){.hero{padding:2.5rem 1.5rem}}
+.hero::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(1px 1px at 10% 18%,rgba(248,250,252,.8) 0%,transparent 100%),radial-gradient(1px 1px at 22% 40%,rgba(191,219,254,.7) 0%,transparent 100%),radial-gradient(1px 1px at 40% 22%,rgba(191,219,254,.85) 0%,transparent 100%),radial-gradient(1px 1px at 70% 16%,rgba(248,250,252,.75) 0%,transparent 100%),radial-gradient(1px 1px at 88% 36%,rgba(191,219,254,.7) 0%,transparent 100%),radial-gradient(1px 1px at 12% 72%,rgba(191,219,254,.65) 0%,transparent 100%),radial-gradient(1px 1px at 34% 86%,rgba(248,250,252,.75) 0%,transparent 100%),radial-gradient(1px 1px at 72% 80%,rgba(191,219,254,.7) 0%,transparent 100%),radial-gradient(1px 1px at 92% 70%,rgba(248,250,252,.8) 0%,transparent 100%)}
+.hero-mesh{position:fixed;inset:0;pointer-events:none;z-index:0}
+.mesh-blob{position:absolute;border-radius:50%;filter:blur(80px);animation:blobFloat 12s ease-in-out infinite;opacity:.8}
+.mesh-blob:nth-child(1){width:420px;height:420px;top:-10%;right:-8%;background:radial-gradient(circle,rgba(30,58,95,.18),transparent 70%)}
+.mesh-blob:nth-child(2){width:280px;height:280px;bottom:-8%;left:8%;background:radial-gradient(circle,rgba(45,90,142,.12),transparent 70%);animation-delay:4s}
+.mesh-blob:nth-child(3){width:160px;height:160px;top:45%;right:22%;background:radial-gradient(circle,rgba(200,223,247,.07),transparent 70%);animation-delay:7s}
+html:not(.dark) .mesh-blob:nth-child(1){background:radial-gradient(circle,rgba(200,223,247,.25),transparent 70%)}
+html:not(.dark) .mesh-blob:nth-child(2){background:radial-gradient(circle,rgba(160,196,237,.18),transparent 70%)}
+@keyframes blobFloat{0%,100%{transform:translate(0,0) scale(1)}40%{transform:translate(-12px,20px) scale(1.03)}70%{transform:translate(10px,-12px) scale(.97)}}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.42rem;background:transparent;border:1px solid var(--border);border-radius:4px;padding:.22rem .8rem;font-size:.67rem;font-weight:500;color:var(--muted);font-family:"DM Sans",sans-serif;margin-bottom:1.35rem}
+.hero-title{font-size:clamp(1.9rem,4.5vw,3.2rem);font-weight:700;margin-bottom:1rem;letter-spacing:-.02em;font-family:"Lora",serif}
+.hero-sub{font-size:.88rem;color:var(--txt2);line-height:1.78;margin-bottom:2.2rem;max-width:470px;font-family:"DM Sans",sans-serif}
+.hero-actions{display:flex;flex-wrap:wrap;gap:.75rem}
+.hero-visual{display:flex;align-items:center;justify-content:center}
+.hero-card-stack{position:relative;width:330px;height:310px}
+.hc{position:absolute;border-radius:var(--r3);background:var(--surf);border:1px solid var(--border);box-shadow:var(--sh-md);padding:1.25rem;transition:all .3s}
+.hc-1{width:255px;height:140px;top:0;left:38px;z-index:3;background:rgba(200,223,247,.05);border-color:rgba(200,223,247,.18)}
+.hc-2{width:240px;height:132px;top:108px;left:10px;z-index:2;transform:rotate(-3.5deg)}
+.hc-3{width:224px;height:122px;top:152px;left:78px;z-index:1;transform:rotate(2.8deg)}
+.hero-ring{position:relative;width:68px;height:68px;flex-shrink:0}
+.hero-ring svg{transform:rotate(-90deg)}
+.hr-bg{fill:none;stroke:var(--bg2);stroke-width:7}
+.hr-fg{fill:none;stroke:url(#hg);stroke-width:7;stroke-linecap:round;stroke-dasharray:185;stroke-dashoffset:55}
+.hr-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:"DM Sans",sans-serif;font-weight:700;font-size:.82rem;color:var(--blue2)}
+/* HOME */
+.home-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-bottom:1.8rem}
+@media(max-width:700px){.home-stats-row{grid-template-columns:1fr 1fr}}
+.h-stat{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);padding:.95rem 1.05rem;box-shadow:var(--sh-sm)}
+.h-stat-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;margin-bottom:.45rem}
+.h-stat-icon svg{width:13px;height:13px}
+.h-stat-val{font-family:"DM Sans",sans-serif;font-weight:700;font-size:1.35rem;line-height:1;margin-bottom:.08rem}
+.h-stat-lbl{font-size:.66rem;color:var(--muted)}
+.home-section-hdr{font-family:"DM Sans",sans-serif;font-weight:600;font-size:.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.7rem}
+.home-hub-list{display:flex;flex-direction:column;gap:.8rem;margin-bottom:2rem}
+/* home hub banner cards */
+.home-hub-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;cursor:pointer;transition:all .2s;display:flex;align-items:stretch;box-shadow:var(--sh-sm);min-height:84px}
+.home-hub-card:hover{border-color:var(--border2);box-shadow:var(--sh-md);transform:translateY(-1px)}
+.home-hub-art{display:none}
+.home-hub-body{flex:1;padding:1rem 1.2rem;display:flex;flex-direction:column;justify-content:center;gap:.3rem;min-width:0}
+.hhb-name{font-family:"Lora",serif;font-weight:700;font-size:.9rem}
+.hhb-goal{font-size:.73rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hhb-prog-row{display:flex;align-items:center;gap:.62rem}
+.hhb-prog-row .prog-track{flex:1}
+.hhb-pct{font-family:"DM Sans",sans-serif;font-weight:700;font-size:.73rem;color:var(--blue2);flex-shrink:0;min-width:30px;text-align:right}
+/* student dual bars */
+.dual-prog{display:flex;flex-direction:column;gap:.28rem}
+.dual-row{display:flex;align-items:center;gap:.55rem}
+.dual-row .prog-track{flex:1;height:4px}
+.dual-lbl{font-size:.61rem;color:var(--muted);flex-shrink:0;width:60px;text-align:right;font-weight:600}
+.dual-pct{font-family:"DM Sans",sans-serif;font-weight:700;font-size:.71rem;flex-shrink:0;min-width:28px;text-align:right}
+.home-hub-meta{flex-shrink:0;padding:.9rem 1rem;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:.28rem;min-width:88px;border-left:1px solid var(--border)}
+.hhm-lbl{font-size:.61rem;color:var(--muted);font-weight:600;font-family:"DM Sans",sans-serif;letter-spacing:.05em}
+.hhm-val{font-family:"DM Sans",sans-serif;font-weight:700;font-size:.8rem;color:var(--txt2)}
+.home-add-rect{background:transparent;border:1px dashed var(--border2);border-radius:var(--r2);display:flex;align-items:center;justify-content:center;gap:.7rem;padding:1.1rem;cursor:pointer;transition:all .2s;color:var(--muted)}
+.home-add-rect:hover{border-color:var(--blue2);color:var(--blue2);background:var(--bluet)}
+.home-add-rect span{font-family:"DM Sans",sans-serif;font-weight:600;font-size:.78rem}
+/* home 2 col */
+.home-2col{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:2rem}
+@media(max-width:680px){.home-2col{grid-template-columns:1fr}}
+.home-panel{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);box-shadow:var(--sh-sm);padding:1.1rem 1.2rem}
+.home-panel-title{font-family:"Lora",serif;font-weight:700;font-size:.8rem;margin-bottom:.85rem;color:var(--txt)}
+.recent-item{display:flex;align-items:center;gap:.7rem;padding:.44rem .55rem;border-radius:7px;margin-bottom:.34rem;cursor:pointer;transition:background .15s}
+.recent-item:hover{background:var(--bg2)}
+.ri-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.ri-name{font-size:.77rem;font-weight:500;flex:1}
+.lb-row{display:flex;align-items:center;gap:.62rem;padding:.42rem .5rem;border-radius:7px;margin-bottom:.3rem}
+.lb-rank{font-family:"DM Sans",sans-serif;font-weight:700;font-size:.72rem;color:var(--muted);width:17px;flex-shrink:0;text-align:center}
+.lb-av{width:26px;height:26px;border-radius:6px;background:var(--grad);display:flex;align-items:center;justify-content:center;color:#fff;font-family:"DM Sans",sans-serif;font-weight:700;font-size:.64rem;flex-shrink:0}
+.lb-name{font-size:.76rem;font-weight:500;flex:1}
+.lb-pts{font-family:"DM Sans",sans-serif;font-weight:700;font-size:.73rem;color:var(--blue2);flex-shrink:0}
+/* HUB LIST */
+.hub-tile-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:.9rem;margin-bottom:1.75rem}
+.hub-tile{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;cursor:pointer;transition:all .2s;box-shadow:var(--sh-sm)}
+.hub-tile:hover{border-color:var(--border2);box-shadow:var(--sh-md);transform:translateY(-2px)}
+.hub-tile-art{display:none}
+.hub-tile-body{padding:.9rem 1rem 1.05rem}
+.htb-name{font-family:"Lora",serif;font-weight:700;font-size:.88rem;margin-bottom:.18rem}
+.htb-meta{font-size:.7rem;color:var(--muted);margin-bottom:.7rem;line-height:1.35}
+.htb-prog{display:flex;align-items:center;gap:.55rem}
+.htb-prog .prog-track{flex:1}
+.htb-pct{font-family:"DM Sans",sans-serif;font-weight:700;font-size:.73rem;color:var(--blue2);flex-shrink:0}
+.hub-tile-add{border:1px dashed var(--border2);border-radius:var(--r2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;padding:1.5rem;cursor:pointer;transition:all .2s;color:var(--muted);min-height:138px}
+.hub-tile-add:hover{border-color:var(--blue2);color:var(--blue2)}
+/* DASHBOARD */
+.week-bar{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);padding:.8rem 1.1rem;margin-bottom:1.55rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.85rem;box-shadow:var(--sh-sm)}
+.wl{font-size:.63rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.15rem}
+.wv{font-family:"Lora",serif;font-weight:700;font-size:.86rem}
+.dash-hubs{display:flex;flex-direction:column;gap:.8rem;margin-bottom:1.6rem}
+.dash-hub-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);padding:.82rem 1.1rem;display:flex;align-items:center;gap:.95rem;cursor:pointer;transition:all .18s}
+.dash-hub-card:hover{border-color:var(--border2);transform:translateX(2px);box-shadow:var(--sh-sm)}
+.dhc-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.dhc-icon svg{width:15px;height:15px}
+.dhc-info{flex:1;min-width:0}
+.dhc-name{font-family:"Lora",serif;font-weight:700;font-size:.82rem;margin-bottom:.1rem}
+.dhc-goal{font-size:.71rem;color:var(--muted);margin-bottom:.48rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dhc-prog{display:flex;align-items:center;gap:.58rem}
+.dhc-prog .prog-track{flex:1}
+.dhc-pct{font-family:"DM Sans",sans-serif;font-weight:700;font-size:.74rem;color:var(--blue2);flex-shrink:0}
+.tab-bar{display:flex;gap:.12rem;background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:.14rem;margin-bottom:1.2rem;width:fit-content}
+.tab-btn{padding:.3rem .82rem;border-radius:5px;font-family:"DM Sans",sans-serif;font-weight:500;font-size:.74rem;color:var(--muted);transition:all .15s;cursor:pointer;white-space:nowrap}
+.tab-btn.active{background:var(--surf);color:var(--txt2);box-shadow:var(--sh-sm)}
+.tab-btn:not(.active):hover{color:var(--txt2)}
+.tab-content{display:none;animation:fadeUp .22s ease both}
+.tab-content.active{display:block}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:.8rem;margin-bottom:1.35rem}
+.stat-box{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);padding:1.05rem;box-shadow:var(--sh-sm)}
+.stat-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;margin-bottom:.5rem}
+.stat-icon svg{width:13px;height:13px}
+.stat-val{font-family:"DM Sans",sans-serif;font-weight:700;font-size:1.45rem;line-height:1;margin-bottom:.14rem}
+.stat-lbl{font-size:.68rem;color:var(--muted);font-weight:500}
+.goals-filters{display:flex;gap:.28rem;flex-wrap:wrap;margin-bottom:.88rem}
+.fchip{padding:.2rem .58rem;border-radius:4px;border:1px solid var(--border);font-size:.69rem;font-weight:500;font-family:"DM Sans",sans-serif;cursor:pointer;transition:all .15s;color:var(--muted);background:transparent}
+.fchip.active{border-color:var(--blue2);color:var(--blue2)}
+.fchip:not(.active):hover{border-color:var(--border2);color:var(--txt2)}
+.goals-list{display:flex;flex-direction:column;gap:.75rem}
+.goal-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);padding:1.05rem 1.25rem;box-shadow:var(--sh-sm);transition:box-shadow .18s}
+.goal-card:hover{box-shadow:var(--sh-md)}
+.gc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.85rem;margin-bottom:.6rem}
+.gc-title{font-family:"Lora",serif;font-weight:700;font-size:.88rem;margin-bottom:.14rem}
+.gc-desc{font-size:.74rem;color:var(--muted);line-height:1.5}
+.gc-badges{display:flex;gap:.3rem;flex-wrap:wrap;flex-shrink:0}
+.gc-prog{display:flex;align-items:center;gap:.62rem;margin:.68rem 0}
+.gc-prog .prog-track{flex:1}
+.gc-pct{font-family:"DM Sans",sans-serif;font-weight:700;font-size:.74rem;color:var(--blue2);flex-shrink:0}
+.gc-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.45rem;padding-top:.65rem;border-top:1px solid var(--border)}
+.gc-pts{display:inline-flex;align-items:center;gap:.2rem;font-family:"DM Sans",sans-serif;font-weight:500;font-size:.7rem;color:var(--muted);background:transparent;border:none;padding:0}
+.gc-pts svg{width:8px;height:8px;flex-shrink:0}
+.act-title{font-family:"Lora",serif;font-weight:700;font-size:.88rem;margin-bottom:.75rem}
+.act-feed{display:flex;flex-direction:column;gap:.45rem}
+.act-item{display:flex;align-items:flex-start;gap:.72rem;padding:.7rem .88rem;background:var(--surf);border:1px solid var(--border);border-radius:var(--r1)}
+.act-dot{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.act-dot svg{width:12px;height:12px}
+.act-txt{font-size:.78rem;line-height:1.45}
+.act-time{font-size:.66rem;color:var(--muted);margin-top:.08rem}
+/* HUB DETAIL */
+.hub-banner{width:100%;height:172px;border-radius:var(--r3);overflow:hidden;position:relative;margin-bottom:1.35rem;box-shadow:var(--sh-md);display:flex;align-items:flex-end}
+.hub-banner-bg{position:absolute;inset:0;background:var(--grad)}
+.hub-banner-pattern{position:absolute;inset:0;opacity:.12;background-image:radial-gradient(circle at 2px 2px,rgba(255,255,255,.6) 1px,transparent 0);background-size:20px 20px}
+.hub-banner-info{position:relative;z-index:2;padding:1.05rem 1.35rem;width:100%;background:linear-gradient(to top,rgba(0,0,0,.5),transparent)}
+.hb-title{font-size:1.3rem;color:#fff;margin-bottom:.16rem;font-family:"Lora",serif}
+.hb-goal{font-size:.82rem;color:rgba(255,255,255,.85)}
+.hb-meta{font-size:.7rem;color:rgba(255,255,255,.6);margin-top:.2rem}
+.hub-banner-edit{position:absolute;top:10px;right:10px;z-index:3;display:flex;align-items:center;gap:.32rem;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:5px;padding:.26rem .68rem;color:#fff;font-size:.68rem;font-weight:600;cursor:pointer;backdrop-filter:blur(8px);transition:background .2s}
+.hub-banner-edit:hover{background:rgba(255,255,255,.25)}
+.hub-banner-edit svg{width:10px;height:10px}
+.hub-big-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);padding:1.25rem;margin-bottom:1.25rem;box-shadow:var(--sh-sm)}
+.hbc-name{font-size:1.1rem;margin-bottom:.16rem;font-family:"Lora",serif}
+.hbc-goal{color:var(--muted);font-size:.82rem;margin-bottom:.4rem}
+.hbc-desc{font-size:.78rem;color:var(--txt2);line-height:1.62;margin-bottom:.85rem}
+.hbc-prog-row{display:flex;align-items:center;gap:.85rem}
+.hbc-prog-row .prog-track{flex:1;height:8px}
+.hbc-pct{font-family:"DM Sans",sans-serif;font-weight:700;font-size:.94rem;color:var(--blue2)}
+.hbc-dual{display:flex;flex-direction:column;gap:.5rem}
+.hbc-dual-row{display:flex;align-items:center;gap:.7rem}
+.hbc-dual-row .prog-track{flex:1;height:7px}
+.hbc-dual-lbl{font-size:.68rem;color:var(--muted);width:72px;flex-shrink:0;font-weight:600}
+.hbc-dual-pct{font-family:"DM Sans",sans-serif;font-weight:700;font-size:.74rem;flex-shrink:0;min-width:30px;text-align:right}
+.student-list{display:flex;flex-direction:column;gap:.6rem}
+.student-row{display:flex;align-items:center;gap:.8rem;background:var(--surf);border:1px solid var(--border);border-radius:var(--r1);padding:.65rem .9rem;transition:border-color .15s}
+.student-row.popup-open{border-radius:var(--r1) var(--r1) 0 0;border-bottom-color:transparent;}
+.stu-av{width:32px;height:32px;border-radius:8px;background:var(--grad);display:flex;align-items:center;justify-content:center;color:#fff;font-family:"DM Sans",sans-serif;font-weight:700;font-size:.74rem;flex-shrink:0;overflow:hidden}
+.stu-name{font-family:"DM Sans",sans-serif;font-weight:600;font-size:.8rem;flex:1;min-width:80px}
+.stu-prog{flex:2;display:flex;align-items:center;gap:.5rem}
+.stu-prog .prog-track{flex:1}
+.stu-pct{font-family:"DM Sans",sans-serif;font-weight:700;font-size:.74rem;color:var(--blue2);width:30px;text-align:right;flex-shrink:0}
+.stu-pts{font-size:.7rem;color:var(--blue2);font-weight:600;width:50px;text-align:right;flex-shrink:0}
+/* CIRCLES */
+.circle-row{display:flex;align-items:center;gap:.55rem;overflow-x:auto;padding-bottom:.3rem}
+.circle-cell{flex-shrink:0;background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);padding:.65rem .6rem;text-align:center;box-shadow:var(--sh-sm);min-width:78px}
+.circle-sm{position:relative;width:52px;height:52px;margin:0 auto .38rem}
+.circle-sm svg{transform:rotate(-90deg);width:100%;height:100%}
+.c-bg{fill:none;stroke:var(--bg2);stroke-width:7}
+.c-fg{fill:none;stroke:url(#cg);stroke-width:7;stroke-linecap:round;stroke-dasharray:138;transition:stroke-dashoffset 1s cubic-bezier(.4,0,.2,1)}
+.c-val{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:"DM Sans",sans-serif;font-weight:700;font-size:.68rem;color:var(--blue2)}
+.circle-lbl{font-family:"DM Sans",sans-serif;font-weight:600;font-size:.62rem;color:var(--txt2)}
+/* STORE */
+.store-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:.95rem}
+.store-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;box-shadow:var(--sh-sm);transition:all .2s;display:flex;flex-direction:column}
+.store-card:hover{transform:translateY(-2px);box-shadow:var(--sh-md);border-color:var(--border2)}
+.store-art{height:106px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;flex-shrink:0}
+.store-art svg.art-bg{position:absolute;inset:0;width:100%;height:100%}
+.store-art .art-icon{position:relative;z-index:1;width:42px;height:42px}
+.store-body{padding:.88rem .92rem;display:flex;flex-direction:column;flex:1}
+.sc-name{font-family:"Lora",serif;font-weight:700;font-size:.83rem;margin-bottom:.18rem}
+.sc-desc{font-size:.71rem;color:var(--muted);margin-bottom:.7rem;line-height:1.44;flex:1}
+.sc-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:.5rem;margin-top:auto}
+.sc-pts{display:flex;align-items:center;gap:.22rem;font-family:"DM Sans",sans-serif;font-weight:700;font-size:.82rem;color:var(--blue2);line-height:1}
+.sc-pts svg{width:9px;height:9px;flex-shrink:0}
+.sc-qty{font-size:.63rem;color:var(--muted);margin-top:.04rem}
+/* SIGN IN */
+.signin-wrap{position:relative;padding-top:3.2rem;padding-bottom:3.2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem}
+.signin-wrap::before{content:'';position:absolute;inset:-40px;border-radius:32px;background:radial-gradient(circle at 0% 0%,rgba(96,165,250,.35),transparent 55%),radial-gradient(circle at 100% 0%,rgba(56,189,248,.3),transparent 55%),radial-gradient(circle at 50% 120%,rgba(129,140,248,.4),transparent 60%);opacity:.9;filter:blur(26px);z-index:-3}
+.signin-wrap::after{content:'';position:absolute;inset:-8px;border-radius:32px;background-image:radial-gradient(1px 1px at 8% 18%,rgba(248,250,252,.9) 0%,transparent 100%),radial-gradient(1px 1px at 26% 34%,rgba(191,219,254,.8) 0%,transparent 100%),radial-gradient(1px 1px at 44% 20%,rgba(191,219,254,.7) 0%,transparent 100%),radial-gradient(1px 1px at 70% 14%,rgba(248,250,252,.9) 0%,transparent 100%),radial-gradient(1px 1px at 88% 34%,rgba(191,219,254,.75) 0%,transparent 100%),radial-gradient(1px 1px at 18% 76%,rgba(191,219,254,.8) 0%,transparent 100%),radial-gradient(1px 1px at 40% 88%,rgba(248,250,252,.85) 0%,transparent 100%),radial-gradient(1px 1px at 72% 82%,rgba(191,219,254,.8) 0%,transparent 100%),radial-gradient(1px 1px at 92% 70%,rgba(248,250,252,.85) 0%,transparent 100%);opacity:.7;z-index:-2;pointer-events:none;animation:starFlicker 10s ease-in-out infinite alternate}
+.signin-inner{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1.1fr);gap:2.4rem;align-items:center;width:100%}
+.signin-left{position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;gap:.75rem}
+.signin-tagline{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600;font-family:"DM Sans",sans-serif}
+.signin-desc{font-size:.83rem;color:var(--txt2);line-height:1.7;max-width:360px}
+.signin-pill-row{display:flex;flex-wrap:wrap;gap:.4rem;font-size:.7rem;margin-top:.25rem}
+.signin-pill{padding:.18rem .6rem;border-radius:999px;border:1px solid rgba(148,163,184,.7);background:rgba(15,23,42,.6);font-weight:600;color:var(--blue2);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase}
+.signin-logo{display:flex;align-items:center;justify-content:center;margin-bottom:.3rem}
+.signin-logo img{width:96px;height:96px;object-fit:contain;border-radius:28px;box-shadow:0 0 40px rgba(125,211,252,.6);filter:drop-shadow(0 0 18px rgba(56,189,248,.9));animation:logoFloat 5s ease-in-out infinite}
+.signin-right{position:relative;z-index:1}
+.signin-card{background:rgba(10,21,37,.9);border:1px solid rgba(148,163,184,.7);border-radius:var(--r3);padding:2.7rem 2.25rem;box-shadow:0 22px 72px rgba(0,0,0,.9);backdrop-filter:blur(24px);transform:scale(1.02)}
+html:not(.dark) .signin-card{background:rgba(15,23,42,.9);color:#e5f2ff}
+.si-title{font-size:1.6rem;margin-bottom:.4rem;text-align:center;font-family:"Lora",serif}
+.si-sub{text-align:center;color:var(--muted);font-size:.9rem;margin-bottom:2rem}
+.wrap-auth{max-width:960px;margin:auto;padding:10.25rem .5rem}
+@media(max-width:768px){
+  .signin-inner{grid-template-columns:1fr;gap:1.6rem;text-align:center}
+  .signin-left{align-items:center}
+  .signin-desc{max-width:100%}
+  .signin-pill-row{justify-content:center}
+}
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.25rem}
+.role-card{border:2px solid var(--border);border-radius:var(--r2);padding:1.45rem .75rem;text-align:center;cursor:pointer;transition:all .2s;background:var(--surf2)}
+.role-card:hover{border-color:var(--blue2);transform:translateY(-2px);box-shadow:var(--sh-md)}
+.role-card.selected{border-color:var(--blue2);background:rgba(200,223,247,.07);box-shadow:var(--sh-md)}
+.role-icon-wrap{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto .75rem}
+.role-icon-wrap svg{width:28px;height:28px}
+.role-lbl{font-family:"DM Sans",sans-serif;font-weight:700;font-size:.98rem}
+.form-group{margin-bottom:.82rem}
+.form-lbl{display:block;font-size:.8rem;font-weight:600;color:var(--txt2);margin-bottom:.4rem;font-family:"DM Sans",sans-serif}
+.signin-card input,
+.signin-card select{font-size:.95rem;padding:.7rem 1rem}
+/* PROFILE */
+.profile-av-wrap{width:96px;height:96px;border-radius:20px;background:var(--grad);margin:0 auto 1.35rem;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--sh-md);position:relative;transition:all .2s}
+.profile-av-wrap svg{width:36px;height:36px}
+.profile-av-overlay{position:absolute;inset:0;border-radius:20px;background:rgba(0,0,0,.42);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
+.profile-av-overlay svg{width:20px;height:20px}
+.profile-av-wrap:hover .profile-av-overlay{opacity:1}
+/* MODAL */
+.modal-bg{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .22s}
+.modal-bg.open{opacity:1;pointer-events:all}
+.modal{background:var(--surf);border:1px solid var(--border);border-radius:var(--r3);padding:1.8rem;width:100%;max-width:560px;max-height:86vh;overflow-y:auto;box-shadow:var(--sh-lg);transform:scale(.95) translateY(10px);transition:transform .24s cubic-bezier(.34,1.56,.64,1)}
+.modal-bg.open .modal{transform:scale(1) translateY(0)}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
+.modal-ttl{font-size:1.1rem;font-family:"Lora",serif}
+.modal-x{color:var(--muted);cursor:pointer;transition:color .18s;display:flex;align-items:center}
+.modal-x:hover{color:var(--red)}
+/* TOAST */
+.toast-wrap{position:fixed;bottom:1.35rem;right:1.35rem;z-index:999;display:flex;flex-direction:column;gap:.38rem;pointer-events:none}
+.toast{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);padding:.65rem .92rem;box-shadow:var(--sh-lg);display:flex;align-items:center;gap:.62rem;font-size:.8rem;font-weight:500;max-width:280px;animation:toastIn .28s cubic-bezier(.34,1.56,.64,1) both}
+.toast svg{width:14px;height:14px;flex-shrink:0}
+@keyframes toastIn{from{transform:translateX(100%) scale(.9);opacity:0}to{transform:none;opacity:1}}
+@keyframes toastOut{to{transform:translateX(110%);opacity:0}}
+/* NOTIFICATION PANEL */
+.notif-panel{position:fixed;top:calc(var(--nav-h) + var(--st-h) + 8px);right:1rem;z-index:500;width:300px;background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);box-shadow:var(--sh-lg);opacity:0;pointer-events:none;transform:translateY(-8px) scale(.97);transition:all .2s cubic-bezier(.34,1.2,.64,1)}
+.notif-panel.open{opacity:1;pointer-events:all;transform:translateY(0) scale(1)}
+.notif-panel-head{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;border-bottom:1px solid var(--border)}
+.notif-panel-title{font-family:"DM Sans",sans-serif;font-weight:700;font-size:.8rem;color:var(--txt)}
+.notif-panel-clear{font-size:.68rem;color:var(--blue2);cursor:pointer;font-weight:500}
+.notif-panel-clear:hover{text-decoration:underline}
+.notif-list{max-height:280px;overflow-y:auto}
+.notif-item{display:flex;align-items:flex-start;gap:.65rem;padding:.72rem 1rem;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s}
+.notif-item:hover{background:var(--surf2)}
+.notif-item:last-child{border-bottom:none}
+.notif-item-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:.28rem}
+.notif-item-txt{font-size:.74rem;color:var(--txt2);line-height:1.45;flex:1}
+.notif-item-time{font-size:.64rem;color:var(--muted);margin-top:.18rem}
+.notif-empty{padding:1.4rem;text-align:center;font-size:.78rem;color:var(--muted)}
+/* PHOTO UPLOAD */
+.photo-upload-area{border:1.5px dashed var(--border2);border-radius:var(--r2);padding:1.25rem;text-align:center;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.photo-upload-area:hover{border-color:var(--blue2);background:var(--bluet)}
+.photo-upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.photo-upload-area .pu-icon{color:var(--blue2);margin-bottom:.45rem}
+.photo-upload-area .pu-icon svg{width:22px;height:22px}
+.photo-upload-area .pu-txt{font-size:.76rem;font-weight:600;color:var(--txt2);margin-bottom:.18rem}
+.photo-upload-area .pu-sub{font-size:.67rem;color:var(--muted)}
+.photo-preview{width:100%;height:110px;object-fit:cover;border-radius:var(--r1);margin-top:.5rem;display:none}
+/* EVIDENCE UPLOAD */
+.ev-upload-zone{border:1.5px dashed var(--border2);border-radius:var(--r1);display:flex;align-items:center;gap:.75rem;padding:.7rem 1rem;cursor:pointer;position:relative;overflow:hidden;transition:all .2s;background:var(--surf2)}
+.ev-upload-zone:hover{border-color:var(--blue2);background:var(--bluet)}
+.ev-upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
+.ev-upload-zone .ev-icon{color:var(--blue2);flex-shrink:0}
+.ev-upload-zone .ev-icon svg{width:18px;height:18px}
+.ev-file-name{font-size:.74rem;color:var(--txt2);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* STUDENT POPUP */
+.stu-popup{background:var(--surf);border:1px solid var(--border);border-radius:0 0 var(--r1) var(--r1);padding:.75rem .9rem;display:none;flex-direction:column;gap:.5rem;border-top:none}
+.stu-popup.open{display:flex}
+/* COUNTDOWN TIMER */
+.week-timer{display:flex;align-items:center;gap:.55rem;padding:.55rem .9rem;border-radius:var(--r1);border:1px solid var(--border);background:var(--surf2);font-family:"DM Sans",sans-serif;margin-bottom:1rem}
+.wt-label{font-size:.68rem;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.wt-val{font-size:.8rem;font-weight:700;font-family:"DM Sans",sans-serif}
+.wt-bar-wrap{flex:1;height:5px;background:var(--bg2);border-radius:3px;overflow:hidden}
+.wt-bar{height:100%;border-radius:3px;transition:width .4s,background .4s}
+/* HUB CODE BADGE */
+.hub-code-row{display:flex;align-items:center;gap:.7rem;margin-bottom:1rem;flex-wrap:wrap}
+.hub-code-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--surf2);border:1px solid var(--border);border-radius:var(--r1);padding:.38rem .8rem;font-family:"DM Sans",monospace;font-size:.82rem;font-weight:700;color:var(--blue2);letter-spacing:.12em}
+.hub-code-copy{font-size:.68rem;font-weight:600;color:var(--muted);cursor:pointer;padding:.2rem .5rem;border-radius:4px;border:1px solid var(--border);background:transparent;transition:all .15s}
+.hub-code-copy:hover{color:var(--blue2);border-color:var(--blue2)}
+.assistant-page{max-width:920px;margin:0 auto;padding:2.25rem 1.5rem}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.assistant-hero{display:flex;align-items:flex-start;gap:1rem;margin-bottom:.85rem;flex-wrap:wrap}
+.assistant-hero-icon{flex-shrink:0;width:48px;height:48px;border-radius:var(--r2);background:rgba(129,140,248,.12);border:1px solid rgba(129,140,248,.22);display:flex;align-items:center;justify-content:center;color:#a5b4fc}
+.assistant-hero-icon svg{width:26px;height:26px}
+.assistant-hero-text{flex:1;min-width:0}
+.assistant-hero-text h2{font-size:1.35rem;margin:0 0 .25rem}
+.assistant-tagline{color:var(--muted);font-size:.8rem;line-height:1.5;margin:0}
+.as-status{min-height:1.1em;font-size:.72rem;color:var(--muted);margin:0 0 .75rem}
+.as-status.as-ok{color:var(--grn)}
+.as-status.as-warn{color:var(--amb)}
+.as-quick-prompts{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1rem}
+.as-quick-prompts button{font-size:.72rem;padding:.35rem .75rem;border-radius:999px;border:1px solid var(--border2);background:var(--surf2);color:var(--txt2);font-weight:600;transition:background .15s,border-color .15s}
+.as-quick-prompts button:hover{border-color:var(--blue2);color:var(--blue2);background:rgba(106,174,232,.08)}
+.as-footnote{font-size:.72rem;color:var(--muted);line-height:1.55;margin:.65rem 0 0}
+.chat-wrap{display:flex;flex-direction:column;gap:.95rem}
+.chat-thread{height:min(52vh,520px);min-height:280px;overflow-y:auto;padding:1rem;border-radius:var(--r2);border:1px solid var(--border);background:rgba(15,23,42,.35);box-shadow:var(--sh-sm)}
+html:not(.dark) .chat-thread{background:rgba(248,250,252,.72)}
+.chat-msg{display:flex;gap:.6rem;margin-bottom:.75rem}
+.chat-msg.user{justify-content:flex-end}
+.chat-bubble{max-width:78%;padding:.72rem .88rem;border-radius:16px;line-height:1.55;font-size:.86rem;white-space:pre-wrap;word-break:break-word}
+.chat-msg.user .chat-bubble{background:rgba(56,189,248,.14);border:1px solid rgba(56,189,248,.28);color:var(--txt)}
+.chat-msg.assistant .chat-bubble{background:rgba(167,139,250,.10);border:1px solid rgba(167,139,250,.22);color:var(--txt)}
+.chat-meta{font-size:.68rem;color:var(--muted);margin-top:.25rem}
+.chat-input-row{display:flex;gap:.65rem;align-items:flex-end}
+#as-input{flex:1;min-width:0;height:92px;resize:vertical;min-height:72px}
+.chat-send-btn{min-width:118px;justify-content:center}
+.credence-suggest-row{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.55rem}
+.credence-suggest-pill{border:1px solid rgba(129,140,248,.35);background:rgba(129,140,248,.10);color:#c4b5fd;border-radius:999px;padding:.25rem .62rem;font-weight:700;font-size:.68rem}
+.assistant-loading{opacity:.75}
+@media(max-width:640px){.role-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:1fr 1fr}.hero-visual{display:none}.home-hub-meta{display:none}.tab-bar{width:100%;overflow-x:auto}}
+</style>
+</head>
+<body>
+<!-- SVG DEFS -->
+<svg width="0" height="0" style="position:absolute;overflow:hidden"><defs>
+  <linearGradient id="cg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2d6caa"/><stop offset="100%" stop-color="#6aaee8"/></linearGradient>
+  <linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2d6caa"/><stop offset="100%" stop-color="#6aaee8"/></linearGradient>
+  <linearGradient id="sg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1a4a80"/><stop offset="100%" stop-color="#2d6caa"/></linearGradient>
+  <linearGradient id="sg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#16407a"/><stop offset="100%" stop-color="#2a6098"/></linearGradient>
+  <linearGradient id="sg3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1c3f6e"/><stop offset="100%" stop-color="#2d609a"/></linearGradient>
+  <linearGradient id="sg4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#153560"/><stop offset="100%" stop-color="#244d80"/></linearGradient>
+</defs></svg>
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-brand" id="nav-brand">
+    <div class="nav-logo"><img src="my_photo.jpg" alt="Credence logo"></div>
+    <span class="nav-title grad-text">Credence</span>
+  </div>
+  <div class="nav-links" id="pub-nav">
+    <button class="theme-btn" id="theme-btn"></button>
+    <span class="nav-link" data-page="landing">Home</span>
+    <span class="nav-link" data-page="signin">Sign In</span>
+    <span class="nav-link" data-page="about">Help</span>
+  </div>
+  <div class="nav-links hidden" id="auth-nav">
+    <button class="theme-btn" id="theme-btn-auth"></button>
+    <span id="auth-role-badge" style="font-size:.72rem;color:var(--muted);font-weight:600;"></span>
+  </div>
+</nav>
+<!-- STATUSBAR -->
+<div class="statusbar hidden" id="statusbar">
+  <div class="sb-left">
+    <button class="menu-btn" id="menu-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <span class="page-label" id="page-label-txt"></span>
+  </div>
+  <div class="sb-right">
+    <div class="pts-chip"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span id="pts-display">0</span> pts</div>
+    <button class="ico-btn" id="notif-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="notif-dot" id="notif-dot"></span></button>
+    <button class="ico-btn" id="profile-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></button>
+  </div>
+</div>
+<!-- SIDEBAR -->
+<div class="sb-overlay" id="sb-overlay"></div>
+<aside class="sidebar" id="sidebar">
+  <div class="sb-head"><div class="sb-avatar" id="sb-initials">CR</div><div><div class="sb-uname" id="sb-name">User</div><div class="sb-urole" id="sb-role">Student</div></div></div>
+  <button class="sb-item active" data-page="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</button>
+  <button class="sb-item" data-page="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</button>
+  <button class="sb-item" data-page="hub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Hub</button>
+  <button class="sb-item" data-page="store"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Store</button>
+  <button class="sb-item" data-page="profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</button>
+  <button class="sb-item" data-page="assistant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a4 4 0 0 1-4 4H7l-4 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/><path d="M8 10h8"/><path d="M8 14h5"/></svg>Credence Assistant</button>
+  <button class="sb-signout" id="sb-signout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sign Out</button>
+</aside>
+<div class="page-wrap" id="page-wrap">
+<!-- LANDING -->
+<div class="page active" id="page-landing">
+  <div class="hero">
+    <div class="hero-mesh"><div class="mesh-blob"></div><div class="mesh-blob"></div><div class="mesh-blob"></div></div>
+    <div style="position:relative;z-index:1;">
+      <div class="signin-logo" style="margin-bottom:1.4rem;">
+        <img src="my_photo.jpg" alt="Credence logo">
+      </div>
+      <div class="hero-eyebrow"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Goal Tracking for Modern Classrooms</div>
+      <h1 class="hero-title">Welcome to<br><span class="grad-text">Credence.</span></h1>
+      <p class="hero-sub">A modern platform where instructors publish goals, students track progress, and achievement is visible — week by week.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary btn-lg" data-page="signin"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>Sign in to platform</button>
+        <button class="btn btn-outline btn-lg" data-page="about"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>Learn more</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ABOUT -->
+<div class="page" id="page-about">
+  <div class="wrap-sm" style="padding-top:3rem;">
+    <h2 class="grad-text" style="font-size:1.8rem;margin-bottom:.9rem;">About Credence</h2>
+    <p style="color:var(--txt2);line-height:1.75;margin-bottom:1rem;font-size:.93rem;">Credence is a modern goal-tracking platform built for real classrooms. Instructors publish weekly goals, students submit evidence, and progress is tracked transparently with a rewarding points system.</p>
+    <button class="btn btn-primary" data-page="signin">Get Started →</button>
+  </div>
+</div>
+<!-- SIGN IN -->
+<div class="page" id="page-signin">
+  <div class="wrap-auth signin-wrap">
+    <div class="signin-inner">
+      <div class="signin-left">
+        <div class="signin-logo">
+          <img src="my_photo.jpg" alt="Credence logo">
+        </div>
+        <div class="signin-tagline">Technology · Education · Sustainability</div>
+        <div class="signin-pill-row">
+          <span class="signin-pill">Technology</span>
+          <span class="signin-pill">Education</span>
+          <span class="signin-pill">Sustainability</span>
+        </div>
+        <p class="signin-desc">Credence helps classrooms track goals in real time, connect evidence to impact, and celebrate progress that moves students and communities toward a more sustainable future.</p>
+      </div>
+      <div class="signin-right">
+        <div class="signin-card" id="step-role">
+      <div class="si-title grad-text">Welcome back</div><div class="si-sub">Choose your role to continue</div>
+      <div class="role-grid">
+        <div class="role-card" id="role-instructor" tabindex="0"><div class="role-icon-wrap" style="background:linear-gradient(135deg,#0369a1,#38bdf8);"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" width="25" height="25"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="role-lbl">Instructor</div></div>
+        <div class="role-card" id="role-student" tabindex="0"><div class="role-icon-wrap" style="background:linear-gradient(135deg,#155e75,#0ea5e9);"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" width="25" height="25"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><div class="role-lbl">Student</div></div>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;" id="role-next-btn">Continue <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+    </div>
+    <div class="signin-card hidden" id="step-form" style="margin-top:.9rem;">
+      <button class="btn btn-ghost btn-sm" id="back-btn" style="margin-bottom:1.1rem;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Back</button>
+      <div class="si-title grad-text" id="form-title">Sign In</div><div class="si-sub">Fill in your details below</div>
+      <div class="form-group"><label class="form-lbl">First Name</label><input type="text" id="in-first" placeholder="e.g. Alex"></div>
+      <div class="form-group"><label class="form-lbl">Last Name</label><input type="text" id="in-last" placeholder="e.g. Johnson"></div>
+      <div class="form-group"><label class="form-lbl">Gmail Address</label><input type="email" id="in-email" placeholder="you@gmail.com"></div>
+      <div class="form-group hidden" id="grad-yr-grp"><label class="form-lbl">Graduation Year</label><select id="in-grad"><option value="">Class of...</option><option>2025</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option><option>2030</option></select></div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:.4rem;" id="signin-submit"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Sign In</button>
+    </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- HOME — wide rectangle banner layout + stats + panels -->
+<div class="page" id="page-home">
+  <div class="wrap">
+    <div class="page-hdr">
+      <div class="page-hdr-l"><h2 id="home-title">Progression</h2><p id="home-subtitle">Your classroom hubs</p></div>
+      <button class="btn btn-primary" id="home-action-btn" style="display:none;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span id="home-action-lbl">Create Hub</span></button>
+    </div>
+    <div class="home-stats-row" id="home-stats"></div>
+    <div class="home-section-hdr" id="home-hubs-lbl">YOUR HUBS</div>
+    <div class="home-hub-list" id="home-hub-list"></div>
+    <div class="home-2col" id="home-2col"></div>
+  </div>
+</div>
+<!-- DASHBOARD -->
+<div class="page" id="page-dashboard">
+  <div class="wrap">
+    <div class="page-hdr"><div class="page-hdr-l"><h2>My Hub</h2></div></div>
+    <div class="week-bar"><div><div class="wl">Period</div><div class="wv" id="dash-week"></div></div><div><div class="wl">Quarter</div><div class="wv">Q2 · 2026</div></div><div><div class="wl">Welcome back</div><div class="wv" id="dash-welcome"></div></div></div>
+    <div class="dash-hubs" id="dash-hubs"></div>
+    <div class="tab-bar" id="dash-tabs">
+      <button class="tab-btn active" data-tab="mygoals">My Goals</button>
+      <button class="tab-btn" data-tab="weeksummary">Weekly Summary</button>
+      <button class="tab-btn" data-tab="history" id="dash-hist-tab">History</button>
+    </div>
+    <div class="tab-content active" id="tab-mygoals"><div class="goals-filters" id="goals-filters"><button class="fchip active" data-filter="all">All Goals</button><button class="fchip" data-filter="pending">Pending</button><button class="fchip" data-filter="approval">In Review</button><button class="fchip" data-filter="revision">Need Revision</button></div><div class="goals-list" id="goals-list"></div></div>
+    <div class="tab-content" id="tab-weeksummary"><div class="stats-grid" id="week-stats"></div><h3 class="act-title">Recent Activity</h3><div class="act-feed" id="act-feed"></div></div>
+    <div class="tab-content" id="tab-history"><div id="hist-content"></div></div>
+  </div>
+</div>
+<!-- HUB LIST — compact square tiles -->
+<div class="page" id="page-hub">
+  <div class="wrap">
+    <div class="page-hdr"><div class="page-hdr-l"><h2>Hubs</h2><p>All your classroom spaces</p></div><button class="btn btn-primary" id="hub-create-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span id="hub-create-lbl">Create Hub</span></button></div>
+    <div class="hub-tile-grid" id="hub-list-grid"></div>
+  </div>
+</div>
+<!-- HUB DETAIL -->
+<div class="page" id="page-hub-detail">
+  <div class="wrap">
+    <button class="btn btn-ghost btn-sm" style="margin-bottom:1.1rem;" id="hub-back-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> All Hubs</button>
+    <div class="hub-banner" id="hub-detail-banner">
+      <div class="hub-banner-bg"></div><div class="hub-banner-pattern"></div>
+      <div class="hub-banner-info">
+        <h2 class="hb-title" id="hd-name"></h2>
+        <div class="hb-goal" id="hd-goal"></div>
+        <div class="hb-meta" id="hd-meta"></div>
+        <div class="hub-code-row hidden" id="hub-code-row">
+          <span style="font-size:.72rem;color:var(--muted);font-weight:600;">HUB CODE</span>
+          <span class="hub-code-badge" id="hub-code-display">––––––</span>
+          <button class="hub-code-copy" id="hub-code-copy-btn">Copy</button>
+        </div>
+      </div>
+      <button class="hub-banner-edit hidden" id="hub-banner-edit-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="10" height="10"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edit Banner</button>
+    </div>
+    <div class="hub-big-card"><h3 class="hbc-name" id="hd-card-name"></h3><div class="hbc-goal" id="hd-card-goal"></div><p class="hbc-desc">Track total class progress toward the shared goal below.</p><div id="hd-prog-area"></div></div>
+    <div class="tab-bar" id="hub-detail-tabs"><button class="tab-btn active" data-tab="hd-prog">Progression</button><button class="tab-btn" data-tab="hd-pub">Publish</button><button class="tab-btn" data-tab="hd-hist">History</button></div>
+    <div class="tab-content active" id="tab-hd-prog"><div id="hd-prog-content"></div></div>
+    <div class="tab-content" id="tab-hd-pub"><div id="hd-pub-content"></div></div>
+    <div class="tab-content" id="tab-hd-hist"><div id="hd-hist-content"></div></div>
+  </div>
+</div>
+<!-- STORE -->
+<div class="page" id="page-store">
+  <div class="wrap">
+    <div class="page-hdr"><div class="page-hdr-l"><h2>Store</h2><p>Spend your earned points on rewards</p></div><button class="btn btn-primary hidden" id="store-create-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Create Item</button></div>
+    <div class="store-grid" id="store-grid"></div>
+  </div>
+</div>
+<!-- PROFILE -->
+<div class="page" id="page-profile">
+  <div class="wrap-sm">
+    <h2 style="margin-bottom:1.75rem;">Your Profile</h2>
+    <div style="text-align:center;margin-bottom:1.6rem;">
+      <div class="profile-av-wrap" id="profile-av-wrap">
+        <img id="profile-av-img" style="width:100%;height:100%;object-fit:cover;border-radius:20px;display:none;" alt="Profile">
+        <svg id="profile-av-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <div class="profile-av-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+        <input type="file" accept="image/*" id="profile-photo-input" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;">
+      </div>
+      <div style="font-size:.72rem;color:var(--muted);margin-top:.5rem;">Click to upload photo</div>
+    </div>
+    <div class="card card-p">
+      <div class="form-group"><label class="form-lbl">Display Name</label><input type="text" id="profile-name-in" placeholder="Your name"></div>
+      <div class="form-group"><label class="form-lbl">Gmail</label><input type="email" id="profile-email-in" placeholder="you@gmail.com" readonly style="opacity:.5;"></div>
+      <div class="form-group"><label class="form-lbl">Bio</label><textarea rows="3" placeholder="Tell us a bit about yourself..."></textarea></div>
+      <button class="btn btn-primary" style="margin-top:.4rem;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Save Profile</button>
+    </div>
+  </div>
+</div>
+<!-- ASSISTANT -->
+<div class="page" id="page-assistant">
+  <div class="assistant-page">
+    <div class="assistant-hero">
+      <div class="assistant-hero-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a4 4 0 0 1-4 4H7l-4 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/><path d="M8 10h8"/><path d="M8 14h5"/></svg></div>
+      <div class="assistant-hero-text">
+        <h2>Credence Assistant</h2>
+        <p id="as-role-line" class="assistant-tagline">Goal ideas, evidence tips, and class engagement — tailored to your role.</p>
+      </div>
+      <button type="button" class="btn btn-ghost btn-sm" id="as-clear-btn" title="Clear conversation">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+        Clear chat
+      </button>
+    </div>
+    <p id="as-status" class="as-status" role="status"></p>
+    <div class="as-quick-prompts" id="as-quick-prompts" aria-label="Suggested prompts"></div>
+    <div class="chat-wrap">
+      <div class="chat-thread" id="as-thread"></div>
+      <div class="chat-input-row">
+        <label class="visually-hidden" for="as-input">Message to Credence Assistant</label>
+        <textarea id="as-input" rows="2" placeholder="Message Credence…" autocomplete="off"></textarea>
+        <button type="button" class="btn btn-primary chat-send-btn" id="as-send-btn">Send</button>
+      </div>
+      <p class="as-footnote">Suggestions are informational only. Instructors and school policies have final say on grades and approvals.</p>
+    </div>
+  </div>
+</div>
+</div>
+<!-- NOTIFICATION PANEL -->
+<div class="notif-panel" id="notif-panel">
+  <div class="notif-panel-head">
+    <span class="notif-panel-title">Notifications</span>
+    <span class="notif-panel-clear" id="notif-clear-btn">Clear all</span>
+  </div>
+  <div class="notif-list" id="notif-list"></div>
+</div>
+<!-- MODAL -->
+<div class="modal-bg" id="modal-bg"><div class="modal"><div class="modal-head"><h3 class="modal-ttl" id="modal-ttl"></h3><button class="modal-x" id="modal-close-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div id="modal-body"></div></div></div>
+<!-- TOAST -->
+<div class="toast-wrap" id="toast-wrap"></div>
+<script>
+// SVG icons
+const S={
+  check:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+  clock:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+  refresh:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>`,
+  star:`<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`,
+  cart:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>`,
+  eye:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`,
+  arrow:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`,
+  upload:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>`,
+  users:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+  trophy:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="8 21 12 21 16 21"/><line x1="12" y1="17" x2="12" y2="21"/><path d="M7 4H4a2 2 0 0 0-2 2v3c0 2.21 1.79 4 4 4h2"/><path d="M17 4h3a2 2 0 0 1 2 2v3c0 2.21-1.79 4-4 4h-2"/><rect x="7" y="2" width="10" height="12" rx="2"/></svg>`,
+  bolt:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+  leaf:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 8C8 10 5.9 16.17 3.82 19.5A5.16 5.16 0 0 0 4 21a4 4 0 0 0 4-4h4c7 0 9.5-2 13-7.5-3 0-6 0-8-1.5z"/></svg>`,
+  layers:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`,
+  edit:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`,
+  plus:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`,
+};
+
+
+const storeArtCfg=[
+  {g:'sg1',p:'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z',f:true},
+  {g:'sg2',p:'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2 M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0-8 0 M23 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75',f:false},
+  {g:'sg3',p:'M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z',f:false},
+  {g:'sg4',p:'M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z',f:false},
+  {g:'sg1',p:'M12 8m-6 0a6 6 0 1 0 12 0a6 6 0 1 0-12 0 M15.477 12.89L17 22l-5-3-5 3 1.523-9.11',f:false},
+  {g:'sg2',p:'M1 4h22v5H1z M1 4l3 16h16l3-16',f:false},
+  {g:'sg3',p:'M2 7h20v15H2z M17 2l-5 5-5-5',f:false},
+  {g:'sg4',p:'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',f:false},
+];
+function storeArtSVG(item){
+  const c=storeArtCfg[(item.id-1)%storeArtCfg.length];
+  return `<svg class="art-bg" viewBox="0 0 208 106" xmlns="http://www.w3.org/2000/svg"><rect width="208" height="106" fill="url(#${c.g})"/><circle cx="170" cy="18" r="50" fill="rgba(56,189,248,.08)"/><circle cx="18" cy="90" r="32" fill="rgba(56,189,248,.05)"/></svg>
+  <div class="art-icon"><svg viewBox="0 0 24 24" fill="${c.f?'rgba(255,255,255,.88)':'none'}" stroke="${c.f?'none':'rgba(255,255,255,.85)'}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="${c.p}"/></svg></div>`;
+}
+
+// STATE
+const state={
+  theme:'dark',role:null,user:null,points:3230,currentPage:'landing',selectedRole:null,profilePhoto:null,
+  currentStudentId:null,
+  assistantMessages:[],
+  hubs:[
+    {id:1,name:'Grade 9 Homeroom',grade:'9',teacher:'Ms. Rivera',goal:'Collect 2000 bottles for recycling',goalTarget:2000,goalUnit:'bottles',students:24,progress:67,myProgress:72,code:'HR9ABC'},
+    {id:2,name:'Environmental Club',grade:'10',teacher:'Ms. Rivera',goal:'Plant 500 trees in the community',goalTarget:500,goalUnit:'trees',students:18,progress:45,myProgress:52,code:'ENVC10'},
+    {id:3,name:'Community Service Club',grade:'11',teacher:'Ms. Rivera',goal:'Log 300 biodiversity observations',goalTarget:300,goalUnit:'observations',students:30,progress:88,myProgress:91,code:'CSVC11'},
+  ],
+  goals:[
+    {id:1,hubId:1,title:'Bottle Collection Drive',desc:'Collect plastic bottles from your neighborhood and bring them to school for recycling.',difficulty:'Hard',points:50,maxPts:50,progress:72,state:'active'},
+    {id:2,hubId:2,title:'Tree Planting Documentation',desc:'Photograph and document each tree you help plant with GPS coordinates.',difficulty:'Medium',points:25,maxPts:25,progress:52,state:'active'},
+    {id:3,hubId:3,title:'Biodiversity Log Entry',desc:'Record at least 10 unique species in your observation journal this week.',difficulty:'Easy',points:10,maxPts:10,progress:91,state:'active'},
+    {id:4,hubId:1,title:'Waterway Cleanup Report',desc:'Submit a written report on the local waterway cleanup event.',difficulty:'Medium',points:25,maxPts:25,progress:0,state:'revision'},
+    {id:5,hubId:2,title:'Community Garden Plan',desc:'Draft a layout plan for the proposed school community garden.',difficulty:'Medium',points:25,maxPts:25,progress:60,state:'approval'},
+    {id:6,hubId:3,title:'Ecosystem Impact Essay',desc:'Write a 500-word essay on how invasive species affect local biodiversity.',difficulty:'Hard',points:50,maxPts:50,progress:30,state:'pending'},
+  ],
+  storeItems:[
+    {id:1,name:'Lunch with Instructor',desc:'Share a relaxed lunch and conversation with your instructor in a special setting.',cost:150,qty:10,type:'individual'},
+    {id:2,name:'Class Trip (Collective)',desc:'Contribute points toward a full-class trip experience for your hub.',cost:2300,qty:1,type:'team'},
+    {id:3,name:'Museum Tickets',desc:'Enjoy an educational visit with tickets to a local museum.',cost:370,qty:20,type:'individual'},
+    {id:4,name:'Waterpark Tickets',desc:'Cool off and have fun with a day pass to a nearby waterpark.',cost:600,qty:10,type:'individual'},
+    {id:5,name:'Canteen Discount',desc:'Get a limited-time discount on snacks and meals at the school canteen.',cost:210,qty:30,type:'individual'},
+    {id:6,name:'Custom Badge',desc:'Unlock a unique digital badge that appears on your profile permanently.',cost:320,qty:15,type:'individual'},
+    {id:7,name:'Movie Ticket',desc:'Redeem a ticket for a movie outing or special film event.',cost:580,qty:15,type:'individual'},
+    {id:8,name:'School Plushie',desc:'Take home an exclusive school mascot plushie to show your spirit.',cost:500,qty:12,type:'individual'},
+    {id:9,name:'School Hoodie',desc:'Grab a cozy school hoodie to represent your hub and campus.',cost:700,qty:10,type:'individual'},
+    {id:10,name:'Late Pass',desc:'Use once to excuse a minor late arrival without penalty.',cost:190,qty:20,type:'individual'},
+    {id:11,name:'Coffee Pass',desc:'Treat yourself (or an instructor) to a coffee or hot drink voucher.',cost:120,qty:25,type:'individual'},
+    {id:12,name:'Community Service Hours (4)',desc:'Convert your points into four documented community service hours.',cost:200,qty:8,type:'individual'},
+  ],
+  students:[
+    {id:1,name:'Johnson, Emma',initials:'EJ',progress:92,pts:92,submission:{note:'Collected 98 bottles from 3 neighborhoods.',time:'Today 9:14am',imgSrc:null}},
+    {id:2,name:'Smith, Liam',initials:'LS',progress:85,pts:85,submission:{note:'Planted 7 trees along Riverside Park.',time:'Yesterday 4:02pm',imgSrc:null}},
+    {id:3,name:'Garcia, Sofia',initials:'SG',progress:78,pts:78,submission:{note:'Logged 12 species including 2 rare finds.',time:'Mon 11:30am',imgSrc:null}},
+    {id:4,name:'Lee, Daniel',initials:'DL',progress:71,pts:71,submission:{note:'Submitted waterway cleanup photo log.',time:'Mon 8:55am',imgSrc:null}},
+    {id:5,name:'Patel, Anika',initials:'AP',progress:64,pts:64,submission:null},
+    {id:6,name:'Brown, Marcus',initials:'MB',progress:55,pts:55,submission:null},
+    {id:7,name:'Chen, Lily',initials:'LC',progress:49,pts:49,submission:{note:'Community garden sketch uploaded.',time:'Fri 2:18pm',imgSrc:null}},
+    {id:8,name:'Nguyen, Kevin',initials:'KN',progress:38,pts:38,submission:null},
+  ],
+  activities:[
+    {svg:null,clr:'var(--grn)',bg:'rgba(52,211,153,.12)',txt:'Goal "Bottle Collection Drive" approved and activated.',time:'2 hours ago'},
+    {svg:null,clr:'var(--amb)',bg:'rgba(251,191,36,.12)',txt:'Emma Johnson submitted evidence for Biodiversity Log.',time:'5 hours ago'},
+    {svg:null,clr:'var(--red)',bg:'rgba(251,113,133,.12)',txt:'Goal "Waterway Report" sent back to Liam Smith for revision.',time:'Yesterday'},
+    {svg:null,clr:'var(--blue)',bg:'rgba(56,189,248,.12)',txt:'New weekly goal posted: Tree Planting Documentation.',time:'Monday'},
+    {svg:null,clr:'var(--vio)',bg:'rgba(167,139,250,.12)',txt:'Sofia Garcia purchased Extra Credit Pass for 150 pts.',time:'Tuesday'},
+  ],
+};
+state.activities[0].svg=S.check; state.activities[1].svg=S.clock;
+state.activities[2].svg=S.refresh; state.activities[3].svg=S.star; state.activities[4].svg=S.cart;
+
+/**
+ * Production backend (Vercel serverless, etc.): Gmail-unique accounts, DB rows, secure hub codes.
+ * CredenceAPI is reserved for future authenticated REST calls.
+ */
+const CredenceAPI={
+  base:typeof window!=='undefined'&&(window.CREDENCE_API_BASE||''),
+  async post(path,body){
+    if(!this.base) return null;
+    const r=await fetch(`${this.base}${path}`,{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify(body)});
+    if(!r.ok) throw new Error(await r.text());
+    return r.json();
+  },
+};
+
+function escapeHtml(s){
+  return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+/** Prefix for hosted API (e.g. set window.CREDENCE_API_BASE = 'https://myapp.vercel.app' when embedding). */
+function apiUrl(path){
+  const b=typeof window!=='undefined'&&(window.CREDENCE_API_BASE||'');
+  const base=String(b).replace(/\/$/,'');
+  const p=path.startsWith('/')?path:'/'+path;
+  return base+p;
+}
+
+/** Calls Vercel `/api/*` routes (OpenAI on server). Falls back to local heuristics if offline or no API key. */
+const CredenceAI={
+  suggestWeeklyGoalLocal(s){
+    const goals=s.goals.filter(g=>g.state==='active');
+    const avg=goals.length?Math.round(goals.reduce((a,g)=>a+g.progress,0)/goals.length):50;
+    const diff=avg>=75?'Medium':avg>=50?'Hard':'Easy';
+    return{
+      title:`Weekly focus: build on your ${avg}% average`,
+      desc:`Try one ${diff.toLowerCase()} goal that stretches participation without overload. (Offline fallback — add OPENAI_API_KEY on Vercel for live AI.)`,
+      difficulty:diff,
+      basis:`Based on ${goals.length} active goals, avg completion ~${avg}%, recent points ${s.points}.`,
+      source:'local',
+    };
+  },
+  async suggestWeeklyGoal(s){
+    try{
+      const r=await fetch(apiUrl('/api/suggest-goal'),{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({points:s.points,goals:s.goals,hubs:s.hubs}),
+      });
+      if(r.ok){
+        const j=await r.json();
+        if(j.title&&j.desc){
+          const difficulty=['Easy','Medium','Hard'].includes(j.difficulty)?j.difficulty:'Medium';
+          return{title:j.title,desc:j.desc,difficulty,basis:j.basis||'',source:j.source||'openai'};
+        }
+      }
+    }catch(e){}
+    return CredenceAI.suggestWeeklyGoalLocal(s);
+  },
+  previewEvidenceAnalysisLocal({note}){
+    const pct=Math.min(95,42+(note?Math.min(note.length,120):0)%53);
+    return{
+      estimatedPct:pct,
+      confidence:Math.min(.92,.55+(pct/500)),
+      relevance:note&&note.length>12?'Likely on-topic (offline heuristics).':'Add notes so the model can check relevance.',
+      disclaimer:'Credence assist only — instructors retain final approval.',
+      source:'local',
+    };
+  },
+  async previewEvidenceAnalysis({note,imageBase64}){
+    if(imageBase64){
+      try{
+        const r=await fetch(apiUrl('/api/analyze-evidence'),{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({imageBase64,note:String(note||'')}),
+        });
+        if(r.ok){
+          const j=await r.json();
+          if(typeof j.estimatedPct==='number'){
+            return{
+              estimatedPct:j.estimatedPct,
+              confidence:typeof j.confidence==='number'?j.confidence:.6,
+              relevance:j.relevance||'',
+              disclaimer:j.disclaimer||'Credence assist only — instructors retain final approval.',
+              source:j.source||'openai',
+            };
+          }
+        }
+      }catch(e){}
+    }
+    return CredenceAI.previewEvidenceAnalysisLocal({note});
+  },
+  atRiskStudents(students){
+    return students.filter(x=>x.progress<45||!x.submission).slice(0,4).map(x=>({id:x.id,name:x.name,reason:x.progress<45?'Below 45% progress':'No submission on file'}));
+  },
+  simplifiedInstructionsLocal(desc){
+    return`Step 1: Read the goal.\nStep 2: Gather proof (photo or notes).\nStep 3: Submit evidence from the dashboard.\n\nOriginal goal:\n${desc}`;
+  },
+  async simplifiedInstructions(desc){
+    try{
+      const r=await fetch(apiUrl('/api/accessibility-help'),{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({goalDescription:desc}),
+      });
+      if(r.ok){
+        const j=await r.json();
+        if(j.steps) return j.steps;
+      }
+    }catch(e){}
+    return CredenceAI.simplifiedInstructionsLocal(desc);
+  },
+  assistantReplyLocal(role,context,userText){
+    const t=String(userText||'').toLowerCase();
+    const hubs=(context&&context.hubs)||[];
+    const hubNames=hubs.map(h=>h.name).filter(Boolean);
+    const goals=(context&&context.activeGoals)||[];
+    const rate=context&&context.participation&&typeof context.participation.rate==='number'?context.participation.rate:null;
+    if(role==='instructor'){
+      if(/hub|code|join|class|enroll/i.test(t)) return `You have ${hubs.length} hub(s)${hubNames.length?': '+hubNames.join(', '):''}. Open Hubs, pick a space, and use the hub code on the banner so students can join.`;
+      if(/goal|publish|week|assign/i.test(t)) return `Use Dashboard → My Goals or a hub’s Publish tab. Lead with one measurable outcome per week, align difficulty with points, and leave room for revision.`;
+      if(/risk|engagement|participat|behind|struggling/i.test(t)) return `Snapshot participation is about ${rate!=null?rate+'%':'—'}%. In Hub detail, expand each student row to review evidence; follow up using your own judgment — Credence only highlights patterns.`;
+      return `Offline mode: I can still coach on hub setup, publishing goals, and reviewing evidence. Which hub or topic should we start with?`;
+    }
+    if(/evidence|photo|submit|proof|upload/i.test(t)) return `From Dashboard → My Goals, choose an active goal and tap Submit Evidence. Add a short note — it helps instructors and makes offline tips more accurate.`;
+    if(/point|store|reward|redeem/i.test(t)) return `You’re at ${context&&context.points!=null?context.points:'—'} points in this demo. Open Store to browse rewards; redemptions stay on this device until you connect a backend.`;
+    if(/goal|progress|stuck|behind/i.test(t)) return goals.length?`You have active goals such as: ${goals.map(g=>g.title).slice(0,3).join('; ')}. Tell me one you’re stuck on and I’ll break it into steps.`:`Check Dashboard for your active goals, then ask about the one that feels hardest.`;
+    return `Offline mode: tell me your class goal and whether you need help with evidence, pacing, or understanding expectations.`;
+  },
+};
+
+const el=id=>document.getElementById(id);
+
+function showToast(msg,type='success'){
+  const c={success:'var(--grn)',error:'var(--red)',info:'var(--blue)'};
+  const ico={success:S.check,error:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,info:S.eye};
+  const wrap=el('toast-wrap');
+  const t=document.createElement('div'); t.className='toast';
+  t.innerHTML=`<span style="color:${c[type]};flex-shrink:0;">${ico[type]}</span><span>${msg}</span>`;
+  wrap.appendChild(t);
+  setTimeout(()=>{t.style.animation='toastOut .26s ease forwards';setTimeout(()=>t.remove(),260);},3200);
+}
+
+function getWeekLabel(){
+  const now=new Date(),mon=new Date(now); mon.setDate(now.getDate()-now.getDay()+1);
+  const sat=new Date(mon); sat.setDate(mon.getDate()+5);
+  const f=d=>d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  return `${f(mon)} – ${f(sat)}, ${now.getFullYear()}`;
+}
+
+// THEME
+function applyTheme(){
+  const dark=state.theme==='dark'; document.documentElement.classList.toggle('dark',dark);
+  const moonSVG=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+  const sunSVG=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+  document.querySelectorAll('.theme-btn').forEach(b=>{b.innerHTML=dark?sunSVG:moonSVG;});
+}
+function toggleTheme(){state.theme=state.theme==='dark'?'light':'dark';applyTheme();}
+el('theme-btn').addEventListener('click',toggleTheme);
+el('theme-btn-auth').addEventListener('click',toggleTheme);
+
+// NAV
+function navigateTo(pageId,updateSb=true){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const t=el(`page-${pageId}`); if(!t) return;
+  t.classList.add('active'); state.currentPage=pageId;
+  window.scrollTo({top:0,behavior:'instant'});
+  if(updateSb) document.querySelectorAll('.sb-item[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===pageId));
+  const labels={home:'Home',dashboard:'Dashboard',hub:'Hubs','hub-detail':'Hub Detail',store:'Store',profile:'Profile',assistant:'Credence Assistant'};
+  const lbl=el('page-label-txt'); if(lbl) lbl.textContent=labels[pageId]||'';
+  if(pageId==='home') renderHome();
+  if(pageId==='dashboard') renderDashboard();
+  if(pageId==='hub') renderHubList();
+  if(pageId==='store') renderStore();
+  if(pageId==='assistant') renderAssistant();
+  setTimeout(applyProfilePhoto,0);
+}
+document.querySelectorAll('[data-page]').forEach(e=>{
+  if(e.classList.contains('sb-item')) return;
+  e.addEventListener('click',()=>{
+    const p=e.dataset.page;
+    if(!['profile','dashboard','home','hub','store','assistant'].includes(p)||!state.user) navigateTo(p,false);
+    else navigateTo(p);
+  });
+});
+el('nav-brand').addEventListener('click',()=>navigateTo(state.user?'home':'landing',!!state.user));
+
+// SIDEBAR
+const openSidebar=()=>{el('sidebar').classList.add('open');el('sb-overlay').classList.add('open');document.body.style.overflow='hidden';};
+const closeSidebar=()=>{el('sidebar').classList.remove('open');el('sb-overlay').classList.remove('open');document.body.style.overflow='';};
+el('menu-btn').addEventListener('click',openSidebar);
+el('sb-overlay').addEventListener('click',closeSidebar);
+document.querySelectorAll('.sb-item[data-page]').forEach(btn=>{btn.addEventListener('click',()=>{navigateTo(btn.dataset.page);closeSidebar();});});
+el('sb-signout').addEventListener('click',()=>{
+  state.user=null; state.role=null; state.selectedRole=null;
+  state.currentStudentId=null;
+  state.assistantMessages=[];
+  el('statusbar').classList.add('hidden');
+  el('pub-nav').classList.remove('hidden');
+  el('auth-nav').classList.add('hidden');
+  el('page-wrap').classList.remove('has-sb');
+  el('auth-role-badge').textContent='';
+  el('pts-display').textContent='0';
+  // reset sign-in form
+  el('step-role').classList.remove('hidden');
+  el('step-form').classList.add('hidden');
+  el('role-instructor').classList.remove('selected');
+  el('role-student').classList.remove('selected');
+  try{el('in-first').value='';el('in-last').value='';el('in-email').value='';el('in-grad').value='';}catch(e){}
+  navigateTo('landing',false); closeSidebar(); showToast('Signed out successfully.','info');
+});
+
+// MODAL
+function openModal(title,body){el('modal-ttl').textContent=title;el('modal-body').innerHTML=body;el('modal-bg').classList.add('open');}
+function closeModal(){el('modal-bg').classList.remove('open');}
+el('modal-close-btn').addEventListener('click',closeModal);
+el('modal-bg').addEventListener('click',e=>{if(e.target===el('modal-bg'))closeModal();});
+
+// SIGN IN
+el('role-instructor').addEventListener('click',()=>selectRole('instructor'));
+el('role-student').addEventListener('click',()=>selectRole('student'));
+function selectRole(r){state.selectedRole=r;el('role-instructor').classList.toggle('selected',r==='instructor');el('role-student').classList.toggle('selected',r==='student');}
+el('role-next-btn').addEventListener('click',()=>{
+  if(!state.selectedRole){showToast('Choose a role.','error');return;}
+  el('step-role').classList.add('hidden'); el('step-form').classList.remove('hidden');
+  el('grad-yr-grp').classList.toggle('hidden',state.selectedRole!=='student');
+  el('form-title').textContent=state.selectedRole==='instructor'?'Instructor Sign In':'Student Sign In';
+});
+el('back-btn').addEventListener('click',()=>{el('step-role').classList.remove('hidden');el('step-form').classList.add('hidden');});
+el('signin-submit').addEventListener('click',()=>{
+  const first=el('in-first').value.trim(),last=el('in-last').value.trim(),email=el('in-email').value.trim();
+  if(!first||!last||!email){showToast('Please fill in all fields.','error');return;}
+  if(!email.toLowerCase().endsWith('@gmail.com')){showToast('Please use a Gmail address.','error');return;}
+  if(state.selectedRole==='student'&&!el('in-grad').value){showToast('Select your graduation year.','error');return;}
+  state.role=state.selectedRole;
+  state.user={firstName:first,lastName:last,email,gradYear:el('in-grad').value};
+  state.points=3230;
+  el('pub-nav').classList.add('hidden'); el('auth-nav').classList.remove('hidden');
+  el('statusbar').classList.remove('hidden'); el('page-wrap').classList.add('has-sb');
+  el('auth-role-badge').textContent=state.role==='instructor'?'Instructor':'Student';
+  el('sb-name').textContent=`${first} ${last}`;
+  el('sb-role').textContent=state.role==='instructor'?'Instructor':`Class of ${state.user.gradYear}`;
+  el('sb-initials').textContent=`${first[0]}${last[0]}`.toUpperCase();
+  el('pts-display').textContent=state.points;
+  state.currentStudentId = state.role==='student' ? 1 : null;
+  state.assistantMessages=[];
+  if(state.role==='instructor') el('store-create-btn').classList.remove('hidden');
+  el('hub-create-lbl').textContent=state.role==='instructor'?'Create Hub':'Join Hub';
+  navigateTo('home'); showToast(`Welcome, ${first}!`);
+});
+
+// ── RENDER HOME ── wide banner cards + stats + 2-col panels
+function renderHome(){
+  const isStudent=state.role==='student';
+  el('home-title').textContent=isStudent?'My Progress':'Progression';
+  el('home-subtitle').textContent=isStudent?'Your individual & class progress':'Your classroom hubs and goal progress';
+  // Hide the create hub button on Home for all roles
+  el('home-action-btn').style.display='none';
+  el('home-action-lbl').textContent='Create Hub';
+
+  // Stats row
+  const statsData=isStudent
+    ?[{c:'var(--grn)',bg:'rgba(52,211,153,.12)',v:4,l:'Goals Done',s:S.check},
+      {c:'var(--blue)',bg:'rgba(56,189,248,.12)',v:3230,l:'Points Earned',s:S.star},
+      {c:'var(--amb)',bg:'rgba(251,191,36,.12)',v:1,l:'Pending',s:S.clock},
+      {c:'var(--vio)',bg:'rgba(167,139,250,.12)',v:72,l:'My Avg %',s:S.eye}]
+    :[{c:'var(--grn)',bg:'rgba(52,211,153,.12)',v:12,l:'Goals Active',s:S.check},
+      {c:'var(--blue)',bg:'rgba(56,189,248,.12)',v:72,l:'Avg Class %',s:S.eye},
+      {c:'var(--amb)',bg:'rgba(251,191,36,.12)',v:3,l:'Pending Review',s:S.clock},
+      {c:'var(--red)',bg:'rgba(251,113,133,.12)',v:2,l:'Need Revision',s:S.refresh}];
+
+  const atRisk=!isStudent?CredenceAI.atRiskStudents(state.students):[];
+  el('home-stats').innerHTML=(atRisk.length?`
+    <div class="ai-at-risk-banner" style="grid-column:1/-1;">
+      <strong>At-Risk alert (Credence monitoring)</strong>
+      <div style="margin-top:.45rem;font-size:.75rem;color:var(--txt2);line-height:1.5;">
+        ${atRisk.map(a=>`<span class="badge badge-at-risk" style="margin-right:.35rem;margin-bottom:.25rem;">${a.name}</span>`).join('')}
+        <span style="color:var(--muted);display:block;margin-top:.35rem;">Patterns: low progress or missing evidence — instructors decide follow-up.</span>
+      </div>
+    </div>`:'')+statsData.map(d=>`
+    <div class="h-stat">
+      <div class="h-stat-icon" style="background:${d.bg};color:${d.c};">${d.s}</div>
+      <div class="h-stat-val" style="color:${d.c};">${d.v}</div>
+      <div class="h-stat-lbl">${d.l}</div>
+    </div>`).join('');
+
+  el('home-hubs-lbl').textContent=isStudent?'YOUR ENROLLED HUBS':'YOUR CREATED HUBS';
+
+  // Wide rectangle hub cards
+  const list=el('home-hub-list'); list.innerHTML='';
+  state.hubs.forEach(hub=>{
+    const card=document.createElement('div'); card.className='home-hub-card'; card.dataset.hubId=hub.id;
+    if(isStudent){
+      card.innerHTML=`
+        <div class="home-hub-body">
+          <div class="hhb-name">${hub.name}</div>
+          <div class="hhb-goal">${hub.goal}</div>
+          <div class="dual-prog">
+            <div class="dual-row">
+              <div class="prog-track"><div class="prog-fill" style="width:${hub.myProgress}%;"></div></div>
+              <div class="dual-pct" style="color:var(--blue);">${hub.myProgress}%</div>
+              <div class="dual-lbl">My progress</div>
+            </div>
+            <div class="dual-row">
+              <div class="prog-track"><div class="prog-fill prog-fill-hub" style="width:${hub.progress}%;"></div></div>
+              <div class="dual-pct" style="color:var(--amb);">${hub.progress}%</div>
+              <div class="dual-lbl">Hub total</div>
+            </div>
+          </div>
+        </div>
+        <div class="home-hub-meta">
+          <div class="hhm-lbl">INSTRUCTOR</div><div class="hhm-val">${hub.teacher}</div>
+          <div class="hhm-lbl" style="margin-top:.38rem;">GRADE</div><div class="hhm-val">${hub.grade}</div>
+        </div>`;
+    } else {
+      card.innerHTML=`
+        <div class="home-hub-body">
+          <div class="hhb-name">${hub.name}</div>
+          <div class="hhb-goal">${hub.goal}</div>
+          <div class="hhb-prog-row">
+            <div class="prog-track"><div class="prog-fill" style="width:${hub.progress}%;"></div></div>
+            <div class="hhb-pct">${hub.progress}%</div>
+          </div>
+        </div>
+        <div class="home-hub-meta">
+          <div class="hhm-lbl">STUDENTS</div><div class="hhm-val">${hub.students}</div>
+          <div class="hhm-lbl" style="margin-top:.38rem;">GRADE</div><div class="hhm-val">${hub.grade}</div>
+        </div>`;
+    }
+    card.addEventListener('click',()=>openHubDetail(hub.id));
+    list.appendChild(card);
+  });
+
+  // 2-col panels (different per role)
+  const col=el('home-2col');
+  if(isStudent){
+    col.innerHTML=`
+      <div class="home-panel">
+        <div class="home-panel-title">Recent Goals</div>
+        ${state.goals.slice(0,4).map(g=>`
+          <div class="recent-item">
+            <div class="ri-dot" style="background:${g.state==='active'?'var(--grn)':g.state==='revision'?'var(--red)':g.state==='approval'?'var(--vio)':'var(--amb)'};"></div>
+            <div class="ri-name">${g.title}</div>
+            <span class="badge badge-${g.difficulty.toLowerCase()}">${g.difficulty}</span>
+          </div>`).join('')}
+      </div>
+      <div class="home-panel">
+        <div class="home-panel-title">Points History</div>
+        ${[{lbl:'Bottle Collection Drive',pts:'+67',c:'var(--grn)'},{lbl:'Tree Planting Doc.',pts:'+40',c:'var(--grn)'},{lbl:'Extra Credit Pass',pts:'−150',c:'var(--red)'},{lbl:'Biodiversity Log',pts:'+20',c:'var(--grn)'}].map(r=>`
+          <div class="recent-item">
+            <div class="ri-dot" style="background:${r.c};"></div>
+            <div class="ri-name">${r.lbl}</div>
+            <span style="font-family:'DM Sans',sans-serif;font-weight:700;font-size:.76rem;color:${r.c};">${r.pts}</span>
+          </div>`).join('')}
+      </div>`;
+  } else {
+    const top5=state.students.slice(0,5);
+    col.innerHTML=`
+      <div class="home-panel">
+        <div class="home-panel-title">Class Leaderboard</div>
+        ${top5.map((s,i)=>`
+          <div class="lb-row">
+            <div class="lb-rank">${i+1}</div>
+            <div class="lb-av">${s.initials}</div>
+            <div class="lb-name">${s.name}</div>
+            <div class="lb-pts">${s.pts} pts</div>
+          </div>`).join('')}
+      </div>
+      <div class="home-panel">
+        <div class="home-panel-title">Pending Actions</div>
+        ${[{txt:'Waterway Report needs review',lbl:'Revision',c:'badge-revision'},{txt:'Biodiversity Log awaiting setup',lbl:'Approval',c:'badge-approval'},{txt:'Tree Planting — 3 new submissions',lbl:'Pending',c:'badge-pending'},{txt:'Bottle Drive — goal 67% complete',lbl:'Active',c:'badge-active'}].map(a=>`
+          <div class="recent-item">
+            <div class="ri-dot" style="background:var(--blue);"></div>
+            <div class="ri-name">${a.txt}</div>
+            <span class="badge ${a.c}">${a.lbl}</span>
+          </div>`).join('')}
+      </div>`;
+  }
+}
+
+el('home-action-btn').addEventListener('click',()=>state.role==='instructor'?openCreateHubModal():openJoinClassModal());
+
+function genHubCode(){
+  const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  return Array.from({length:6},()=>chars[Math.floor(Math.random()*chars.length)]).join('');
+}
+
+function openCreateHubModal(){
+  openModal('Create a New Hub',`
+    <div class="form-group"><label class="form-lbl">Hub Name</label><input type="text" id="m-hname" placeholder="e.g. Grade 10 Biology"></div>
+    <div class="form-group"><label class="form-lbl">Grade Level</label><input type="text" id="m-hgrade" placeholder="e.g. 10"></div>
+    <div class="form-group"><label class="form-lbl">First Goal</label><input type="text" id="m-hgoal" placeholder="e.g. Collect 1000 cans"></div>
+    <div class="form-group" style="margin-bottom:.5rem;"><label class="form-lbl">Hub Banner Photo <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+      <div class="photo-upload-area" id="hub-banner-upload-area">
+        <input type="file" accept="image/*" id="hub-banner-file" onchange="previewHubBannerModal(this)">
+        <div class="pu-icon">${S.upload}</div>
+        <div class="pu-txt">Upload banner image</div>
+        <div class="pu-sub">Tap to choose from your library</div>
+        <img class="photo-preview" id="hub-banner-preview-modal">
+      </div>
+    </div>
+    <button class="btn btn-primary btn-sm" style="width:25%;justify-content:center;margin-top:.5rem;" id="m-hsubmit">${S.plus} Create Hub</button>`);
+  setTimeout(()=>{
+    el('m-hsubmit').addEventListener('click',()=>{
+      const name=el('m-hname').value.trim(),goal=el('m-hgoal').value.trim();
+      if(!name||!goal){showToast('Name and goal required.','error');return;}
+      const code=genHubCode();
+      const bannerFile=el('hub-banner-file').files[0];
+      const newHub={id:Date.now(),name,grade:el('m-hgrade').value,teacher:`${state.user.firstName} ${state.user.lastName}`,goal,progress:0,myProgress:0,students:0,code};
+      if(bannerFile){const r=new FileReader();r.onload=e=>{newHub.bannerImg=e.target.result;};r.readAsDataURL(bannerFile);}
+      state.hubs.push(newHub);
+      closeModal(); renderHome(); showToast(`Hub "${name}" created! Code: ${code}`);
+    });
+  },50);
+}
+
+function previewHubBannerModal(input){
+  if(input.files&&input.files[0]){
+    const r=new FileReader(); r.onload=e=>{const img=el('hub-banner-preview-modal');img.src=e.target.result;img.style.display='block';};r.readAsDataURL(input.files[0]);
+  }
+}
+
+function openJoinClassModal(){
+  openModal('Join a Hub',`
+    <div class="form-group"><label class="form-lbl">Hub Code</label><input type="text" id="m-code" placeholder="Enter the 6-character code from your instructor" maxlength="8" style="text-transform:uppercase;letter-spacing:.12em;font-weight:700;"></div>
+    <button class="btn btn-primary btn-sm" style="width:100%;justify-content:center;margin-top:.4rem;" id="m-join-sub">Join Hub</button>`);
+  setTimeout(()=>{el('m-join-sub').addEventListener('click',()=>{
+    const raw=(el('m-code').value||'').trim().toUpperCase().replace(/[^A-Z0-9]/g,'');
+    if(raw.length!==6){showToast('Enter the 6-character hub code.','error');return;}
+    const hub=state.hubs.find(h=>(h.code||'').toUpperCase()===raw);
+    if(!hub){showToast('Invalid hub code. Ask your instructor for the current code.','error');return;}
+    hub.students=Math.min(999,(hub.students||0)+1);
+    closeModal();
+    showToast(`Joined “${hub.name}” successfully!`,'success');
+    renderHome();
+    try{renderHubList();}catch(e){}
+    try{renderDashboard();}catch(e){}
+  });},50);
+}
+
+// ── RENDER HUB LIST ── compact square tiles
+function renderHubList(){
+  const grid=el('hub-list-grid'); grid.innerHTML='';
+  state.hubs.forEach(hub=>{
+    const card=document.createElement('div'); card.className='hub-tile'; card.dataset.hubId=hub.id;
+    card.innerHTML=`
+      <div class="hub-tile-body">
+        <div class="htb-name">${hub.name}</div>
+        <div class="htb-meta">${hub.teacher}${hub.grade?` · Grade ${hub.grade}`:''} · ${hub.students} students</div>
+        <div class="htb-prog">
+          <div class="prog-track"><div class="prog-fill" style="width:${hub.progress}%;"></div></div>
+          <div class="htb-pct">${hub.progress}%</div>
+        </div>
+      </div>`;
+    card.addEventListener('click',()=>openHubDetail(hub.id));
+    grid.appendChild(card);
+  });
+}
+el('hub-create-btn').addEventListener('click',()=>{
+  if(state.role==='instructor') openCreateHubModal();
+  else openJoinClassModal();
+});
+
+// ── RENDER DASHBOARD ──
+function renderDashboard(){
+  el('dash-week').textContent=getWeekLabel();
+  el('dash-welcome').textContent=state.user?state.user.firstName:'';
+  const hubs=el('dash-hubs'); hubs.innerHTML='';
+  const iconBgs=['linear-gradient(135deg,#0369a1,#38bdf8)','linear-gradient(135deg,#065f46,#10b981)','linear-gradient(135deg,#3730a3,#6366f1)'];
+  state.hubs.forEach((hub,i)=>{
+    const pct=state.role==='instructor'?hub.progress:hub.myProgress;
+    const d=document.createElement('div'); d.className='dash-hub-card'; d.dataset.hubId=hub.id;
+    d.innerHTML=`
+      <div class="dhc-icon" style="background:${iconBgs[i%3]};">${S.layers}</div>
+      <div class="dhc-info">
+        <div class="dhc-name">${hub.name}</div>
+        <div class="dhc-goal">${hub.goal}</div>
+        <div class="dhc-prog"><div class="prog-track"><div class="prog-fill" style="width:${pct}%;"></div></div><div class="dhc-pct">${pct}%</div></div>
+      </div>
+      <span style="color:var(--muted);flex-shrink:0;">${S.arrow}</span>`;
+    d.addEventListener('click',()=>openHubDetail(hub.id));
+    hubs.appendChild(d);
+  });
+  setupTabs('dash-tabs',['mygoals','weeksummary','history']);
+  renderGoals('all');
+  el('goals-filters').querySelectorAll('.fchip').forEach(c=>{
+    c.addEventListener('click',()=>{
+      el('goals-filters').querySelectorAll('.fchip').forEach(x=>x.classList.remove('active'));
+      c.classList.add('active'); renderGoals(c.dataset.filter);
+    });
+  });
+  renderWeekSummary();
+  renderHistory();
+  const dht=el('dash-hist-tab'); if(dht) dht.style.display=state.role==='student'?'':'none';
+}
+
+function getDifficultyMax(diff){
+  if(diff==='Hard') return 50;
+  if(diff==='Medium') return 25;
+  return 10;
+}
+
+function renderGoals(filter){
+  const list=el('goals-list'); list.innerHTML='';
+  const isStudent=state.role==='student';
+  if(isStudent&&filter==='all'){
+    const recEl=document.createElement('div');
+    recEl.className='ai-recommendation';
+    recEl.innerHTML=`<div style="font-size:.78rem;color:var(--muted);">Loading Credence suggestion…</div>`;
+    list.appendChild(recEl);
+    CredenceAI.suggestWeeklyGoal(state).then(rec=>{
+      const tag=rec.source==='openai'?'Live (OpenAI)':'Offline (fallback)';
+      recEl.innerHTML=`
+      <div class="ai-recommendation-hdr">
+        <span class="badge badge-ai-suggested">Credence suggested goal</span>
+        <span class="badge badge-${escapeHtml(rec.difficulty).toLowerCase()}">${escapeHtml(rec.difficulty)}</span>
+        <span style="font-size:.62rem;color:var(--muted);">${escapeHtml(tag)}</span>
+      </div>
+      <div class="gc-title" style="font-size:.95rem;margin-bottom:.2rem;">${escapeHtml(rec.title)}</div>
+      <div class="gc-desc" style="font-size:.78rem;">${escapeHtml(rec.desc)}</div>
+      <div class="ai-basis"><b>Suggestion basis:</b> ${escapeHtml(rec.basis)}</div>`;
+    }).catch(()=>{
+      const rec=CredenceAI.suggestWeeklyGoalLocal(state);
+      recEl.innerHTML=`
+      <div class="ai-recommendation-hdr">
+        <span class="badge badge-ai-suggested">Credence suggested goal</span>
+        <span class="badge badge-${escapeHtml(rec.difficulty).toLowerCase()}">${escapeHtml(rec.difficulty)}</span>
+      </div>
+      <div class="gc-title" style="font-size:.95rem;margin-bottom:.2rem;">${escapeHtml(rec.title)}</div>
+      <div class="gc-desc" style="font-size:.78rem;">${escapeHtml(rec.desc)}</div>
+      <div class="ai-basis"><b>Suggestion basis:</b> ${escapeHtml(rec.basis)}</div>`;
+    });
+  }
+  let goals=state.goals;
+  if(filter==='all'){
+    // Students: one active goal per hub
+    if(isStudent){
+      goals=state.hubs.map(hub=>{
+        return state.goals.find(g=>g.hubId===hub.id&&g.state==='active');
+      }).filter(Boolean);
+    }
+    // Instructors: all goals
+  } else {
+    goals=goals.filter(g=>g.state===filter);
+  }
+  if(!goals.length){
+    const empty=document.createElement('div');
+    empty.style.cssText='text-align:center;padding:2rem;color:var(--muted);font-size:.88rem;';
+    empty.textContent='No goals in this category.';
+    list.appendChild(empty);
+    return;
+  }
+  const stMap={active:'Active',pending:'Pending',approval:'In Review',revision:'Needs Revision'};
+  goals.forEach(g=>{
+    const maxPts=getDifficultyMax(g.difficulty);
+    const showDiff=!isStudent||(g.state==='active');
+    // Calculate per-student quota if hub has goalTarget
+    const hub=state.hubs.find(h=>h.id===g.hubId);
+    let quotaHTML='';
+    if(isStudent&&hub&&hub.goalTarget&&hub.students>0){
+      const perStudent=Math.ceil(hub.goalTarget/hub.students);
+      const done=Math.round(perStudent*(g.progress/100));
+      quotaHTML=`<div style="display:flex;align-items:center;gap:.5rem;margin-top:.3rem;font-family:'DM Sans',sans-serif;">
+        <span style="font-size:.7rem;color:var(--muted);">Your share:</span>
+        <span style="font-size:.78rem;font-weight:700;color:var(--blue2);">${done} / ${perStudent} ${hub.goalUnit}</span>
+      </div>`;
+    }
+    const actionBtn=isStudent
+      ?`<button class="btn btn-primary btn-sm" data-goal-id="${g.id}" data-action="submit-ev" style="padding:.28rem .7rem;font-size:.71rem;">${S.upload} Submit Evidence</button>`
+      :`<button class="btn btn-outline btn-sm" data-goal-id="${g.id}" data-action="see-prog">${S.users} View Progress</button>`;
+    const card=document.createElement('div'); card.className='goal-card';
+    // Hub name label for student (so they know which hub this goal belongs to)
+    const hubLabel=isStudent&&hub?`<span style="font-size:.63rem;color:var(--muted);font-weight:600;font-family:'DM Sans',sans-serif;letter-spacing:.04em;text-transform:uppercase;">${hub.name}</span>`:'';
+    const aiHelp=isStudent&&showDiff?`<div style="margin-top:.5rem;"><button type="button" class="btn btn-ghost btn-sm" data-ai-help="${g.id}">Credence help · simpler steps</button></div>`:'';
+    card.innerHTML=`
+      <div class="gc-top">
+        <div>${hubLabel}<div class="gc-title" style="margin-top:.1rem;">${g.title}</div><div class="gc-desc">${g.desc}</div>${quotaHTML}${aiHelp}</div>
+        <div class="gc-badges">${showDiff?`<span class="badge badge-${g.difficulty.toLowerCase()}">${g.difficulty}</span>`:''}<span class="badge badge-${g.state}">${stMap[g.state]}</span></div>
+      </div>
+      <div class="gc-prog"><div class="prog-track"><div class="prog-fill" style="width:${g.progress}%;"></div></div><div class="gc-pct">${g.progress}%</div></div>
+      <div class="gc-footer">
+        <div style="display:flex;flex-direction:column;gap:.12rem;">
+          <div class="gc-pts">${S.star} <span style="font-weight:700;color:var(--blue2);">${maxPts} pts</span> <span style="color:var(--muted);font-size:.68rem;">(${g.difficulty} goal)</span></div>
+          ${isStudent?`<div style="font-size:.67rem;color:var(--muted);">Earn up to <b style="color:var(--grn);">${maxPts} pts</b> on completion</div>`:''}
+        </div>
+        ${actionBtn}
+      </div>`;
+    list.appendChild(card);
+  });
+  list.querySelectorAll('[data-ai-help]').forEach(b=>b.addEventListener('click',async()=>{
+    const g=state.goals.find(x=>String(x.id)===b.dataset.aiHelp);
+    if(!g) return;
+    openModal('Credence accessibility help',`<p id="ai-help-loading" style="font-size:.82rem;color:var(--muted);">Loading…</p>`);
+    const text=await CredenceAI.simplifiedInstructions(g.desc);
+    const body=el('modal-body');
+    if(body) body.innerHTML=`<div style="font-size:.82rem;line-height:1.65;color:var(--txt2);white-space:pre-wrap;">${escapeHtml(text)}</div><p style="font-size:.7rem;color:var(--muted);margin-top:.75rem;">Instructors may edit this guidance before publishing.</p>`;
+  }));
+  list.querySelectorAll('[data-action="submit-ev"]').forEach(b=>b.addEventListener('click',()=>openSubmitEvidenceModal(b.dataset.goalId)));
+  list.querySelectorAll('[data-action="see-prog"]').forEach(b=>b.addEventListener('click',()=>openParticipantProgressModal()));
+}
+
+function openSubmitEvidenceModal(goalId){
+  openModal('Submit Evidence',`
+    <p style="color:var(--muted);font-size:.78rem;margin-bottom:1rem;line-height:1.55;">Upload a photo or file showing your completed work.</p>
+    <div class="form-group">
+      <label class="form-lbl">Attach Photo or File</label>
+      <div class="ev-upload-zone" id="ev-upload-zone">
+        <input type="file" accept="image/*,application/pdf" id="ev-file-input" onchange="handleEvFile(this)">
+        <div class="ev-icon">${S.upload}</div>
+        <div>
+          <div class="ev-file-name" id="ev-file-name">Tap to choose photo or file</div>
+          <div style="font-size:.64rem;color:var(--muted);margin-top:.06rem;">Photo, PDF or image from library</div>
+        </div>
+      </div>
+      <img id="ev-preview" style="width:100%;max-height:120px;object-fit:cover;border-radius:var(--r1);margin-top:.5rem;display:none;border:1px solid var(--border);">
+    </div>
+    <div class="form-group"><label class="form-lbl">Quantity <span style="color:var(--muted);font-weight:400;">(optional)</span></label><input type="number" id="m-ev-qty" placeholder="e.g. 45 bottles"></div>
+    <div class="form-group"><label class="form-lbl">Notes</label><textarea rows="2" id="m-ev-desc" placeholder="Briefly describe your work..." oninput="updateEvidenceAiPanel()"></textarea></div>
+    <div class="ai-ev-panel" id="ai-ev-panel" style="display:none;"></div>
+    <button class="btn btn-primary btn-sm" style="width:30%;justify-content:center;margin-top:.4rem;" id="m-ev-sub">${S.upload} Submit for Review</button>`);
+  setTimeout(()=>{el('m-ev-sub').addEventListener('click',()=>{
+    // Save submitted evidence image to the first student (simulating current logged-in student)
+    if(state.lastEvidence&&state.lastEvidence.src){
+      // Attach to currently signed-in student (demo uses currentStudentId)
+      const me=state.students.find(s=>s.id===state.currentStudentId);
+      if(me){
+        if(!me.submission) me.submission={note:'',time:'',imgSrc:null,aiAnalysis:null};
+        me.submission.imgSrc=state.lastEvidence.src;
+        me.submission.time='Just now';
+        if(el('m-ev-desc')&&el('m-ev-desc').value) me.submission.note=el('m-ev-desc').value;
+        if(state._lastEvidenceAi){
+          me.submission.aiAnalysis=state._lastEvidenceAi;
+          state._lastEvidenceAi=null;
+        }
+      }
+    }
+    closeModal();showToast('Evidence submitted! Awaiting instructor review.');
+  });},50);
+}
+function handleEvFile(input){
+  if(!input.files||!input.files[0]) return;
+  const f=input.files[0];
+  el('ev-file-name').textContent=f.name;
+  el('ev-upload-zone').style.borderColor='var(--blue2)';
+  if(f.type.startsWith('image/')){
+    const r=new FileReader();r.onload=e=>{const img=el('ev-preview');img.src=e.target.result;img.style.display='block';updateEvidenceAiPanel();};r.readAsDataURL(f);
+    // Store for instructor to view
+    state.lastEvidence={name:f.name,type:'image',goalId:null};
+    const r2=new FileReader();r2.onload=e=>{state.lastEvidence.src=e.target.result;updateEvidenceAiPanel();};r2.readAsDataURL(f);
+  } else {
+    el('ev-preview').style.display='none';
+    state.lastEvidence={name:f.name,type:'file'};
+    updateEvidenceAiPanel();
+  }
+}
+
+async function updateEvidenceAiPanel(){
+  const panel=el('ai-ev-panel');
+  if(!panel) return;
+  const note=el('m-ev-desc')?el('m-ev-desc').value:'';
+  if(!state.lastEvidence||state.lastEvidence.type!=='image'){panel.style.display='none';panel.innerHTML='';return;}
+  panel.style.display='block';
+  panel.innerHTML=`<span style="color:var(--muted);font-size:.72rem;">Analyzing with Credence…</span>`;
+  const a=await CredenceAI.previewEvidenceAnalysis({note,imageBase64:state.lastEvidence.src});
+  state._lastEvidenceAi=a;
+  if(state.lastEvidence) state.lastEvidence.aiAnalysis=a;
+  const tag=a.source==='openai'?'Live (OpenAI)':'Offline (fallback)';
+  panel.innerHTML=`<strong style="color:var(--txt2);">Credence estimated progress</strong> ~${a.estimatedPct}% · <span class="badge badge-ai-progress">confidence ${(a.confidence*100).toFixed(0)}%</span>
+    <span style="font-size:.62rem;color:var(--muted);margin-left:.35rem;">${escapeHtml(tag)}</span>
+    <div style="margin-top:.35rem;color:var(--muted);">${escapeHtml(a.relevance)}</div>
+    <div style="margin-top:.35rem;font-size:.65rem;color:var(--muted);">${escapeHtml(a.disclaimer)}</div>`;
+}
+
+function handleEditItemPhoto(input){
+  if(!input.files||!input.files[0]) return;
+  const f=input.files[0];
+  const r=new FileReader();
+  r.onload=e=>{
+    const src=e.target.result;
+    state._editItemPendingImg=src;
+    const preview=el('e-iimg-preview');
+    if(preview){preview.src=src;preview.style.display='block';}
+    const lbl=el('e-iimg-lbl');
+    if(lbl) lbl.textContent=f.name;
+    const zone=el('e-iimg-zone');
+    if(zone) zone.style.borderColor='var(--blue2)';
+  };
+  r.readAsDataURL(f);
+}
+
+function openParticipantProgressModal(){
+  const rows=state.students.map(s=>`
+    <div class="student-row">
+      <div class="stu-av">${s.initials}</div>
+      <div class="stu-name">${s.name}</div>
+      <div class="stu-prog"><div class="prog-track"><div class="prog-fill" style="width:${s.progress}%;"></div></div><div class="stu-pct">${s.progress}%</div></div>
+      <div class="stu-pts">${s.pts} pts</div>
+    </div>`).join('');
+  openModal('Participant Progress',`<div class="student-list">${rows}</div>`);
+}
+
+function renderWeekSummary(){
+  const sData=state.role==='instructor'
+    ?[{s:S.check,c:'var(--grn)',bg:'rgba(52,211,153,.12)',v:12,l:'Goals Completed'},
+      {s:S.clock,c:'var(--amb)',bg:'rgba(251,191,36,.12)',v:3,l:'Pending Submissions'},
+      {s:S.star,c:'var(--blue2)',bg:'rgba(125,211,252,.12)',v:170,l:'Points Available'},
+      {s:S.eye,c:'var(--blue)',bg:'rgba(56,189,248,.12)',v:2,l:'Under Review'}]
+    :[{s:S.check,c:'var(--grn)',bg:'rgba(52,211,153,.12)',v:4,l:'Completed'},
+      {s:S.clock,c:'var(--amb)',bg:'rgba(251,191,36,.12)',v:1,l:'Pending'},
+      {s:S.star,c:'var(--blue2)',bg:'rgba(125,211,252,.12)',v:3230,l:'Points Earned'},
+      {s:S.eye,c:'var(--blue)',bg:'rgba(56,189,248,.12)',v:1,l:'Under Review'}];
+  el('week-stats').innerHTML=sData.map(d=>`
+    <div class="stat-box">
+      <div class="stat-icon" style="background:${d.bg};color:${d.c};">${d.s}</div>
+      <div class="stat-val" style="color:${d.c};">${d.v}</div>
+      <div class="stat-lbl">${d.l}</div>
+    </div>`).join('');
+  el('act-feed').innerHTML=state.activities.map(a=>`
+    <div class="act-item">
+      <div class="act-dot" style="background:${a.bg};color:${a.clr};">${a.svg}</div>
+      <div><div class="act-txt">${a.txt}</div><div class="act-time">${a.time}</div></div>
+    </div>`).join('');
+}
+
+function renderHistory(){
+  if(state.role==='student'){
+    el('hist-content').innerHTML=`
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;">
+        <div><h4 style="font-family:'DM Sans',sans-serif;font-weight:700;margin-bottom:.85rem;font-size:.9rem;">Point History</h4>
+          <div class="act-feed">
+            <div class="act-item"><div class="act-dot" style="background:rgba(167,139,250,.12);color:var(--vio);">${S.cart}</div><div><div class="act-txt">Extra Credit Pass — <b>−150 pts</b></div><div class="act-time">Feb 14</div></div></div>
+            <div class="act-item"><div class="act-dot" style="background:rgba(52,211,153,.12);color:var(--grn);">${S.star}</div><div><div class="act-txt">Bottle Collection — <b>+67 pts</b></div><div class="act-time">Feb 11</div></div></div>
+            <div class="act-item"><div class="act-dot" style="background:rgba(52,211,153,.12);color:var(--grn);">${S.star}</div><div><div class="act-txt">Tree Planting — <b>+40 pts</b></div><div class="act-time">Feb 4</div></div></div>
+          </div>
+        </div>
+        <div><h4 style="font-family:'DM Sans',sans-serif;font-weight:700;margin-bottom:.85rem;font-size:.9rem;">Past Progression</h4>
+          <div class="act-feed">
+            <div class="act-item"><div class="act-dot" style="background:rgba(56,189,248,.12);color:var(--blue);">${S.trophy}</div><div><div class="act-txt">Bottle Drive — 67% complete</div><div class="act-time">Week of Feb 10</div></div></div>
+            <div class="act-item"><div class="act-dot" style="background:rgba(56,189,248,.12);color:var(--blue);">${S.trophy}</div><div><div class="act-txt">Tree Planting — 80% complete</div><div class="act-time">Week of Feb 3</div></div></div>
+          </div>
+        </div>
+      </div>`;
+  } else {
+    el('hist-content').innerHTML=`<p style="color:var(--muted);font-size:.88rem;">History view is available for student accounts.</p>`;
+  }
+}
+
+// ── CREDENCE ASSISTANT ──
+function getCredenceAssistantContext(){
+  const role=state.role||'';
+  const student=state.students.find(s=>s.id===state.currentStudentId)||state.students[0]||null;
+  const participation=student
+    ?{hasSubmission:!!student.submission,submissionNote:(student.submission&&student.submission.note||'').slice(0,120)}
+    :{hasSubmission:false,submissionNote:''};
+  const activeGoals=state.goals.filter(g=>g.state==='active').slice(0,4).map(g=>({
+    title:g.title,
+    difficulty:g.difficulty,
+    progress:g.progress,
+    desc:g.desc.slice(0,180),
+  }));
+  const participationRate=Math.round((state.students.filter(s=>!!s.submission).length/Math.max(1,state.students.length))*100);
+  return{
+    role,
+    user: state.user?{firstName:state.user.firstName,lastName:state.user.lastName,email:state.user.email,gradYear:state.user.gradYear}:null,
+    points:state.points,
+    student: student?{id:student.id,name:student.name,progress:student.progress,pts:student.pts,submission:student.submission||null}:null,
+    participation:{rate:participationRate, ...participation},
+    activeGoals,
+    hubs: state.hubs.slice(0,5).map(h=>({name:h.name,goal:h.goal,code:h.code,students:h.students,progress:h.progress,myProgress:h.myProgress})),
+  };
+}
+
+function appendChatBubble(thread, role, content){
+  const wrap=document.createElement('div');
+  wrap.className=`chat-msg ${role}`;
+  const bubble=document.createElement('div');
+  bubble.className='chat-bubble';
+  bubble.innerHTML=escapeHtml(content).replace(/\n/g,'<br>');
+  const meta=document.createElement('div');
+  meta.className='chat-meta';
+  meta.textContent=role==='user'?'You':'Credence';
+  wrap.appendChild(bubble);
+  wrap.appendChild(meta);
+  thread.appendChild(wrap);
+  return wrap;
+}
+
+function renderAssistant(){
+  const thread=el('as-thread');
+  const roleLine=el('as-role-line');
+  const quick=el('as-quick-prompts');
+  const st=el('as-status');
+  if(!thread) return;
+  const isInst=state.role==='instructor';
+  if(roleLine) roleLine.textContent=isInst
+    ? 'Coach your hubs: codes, weekly goals, evidence review, and engagement — you stay in charge of grades and approvals.'
+    : 'Plan goals, evidence, and points — your instructor approves final work.';
+  if(quick){
+    quick.innerHTML='';
+    const prompts=isInst
+      ?['How do I share hub codes with my class?','Ideas for this week’s goals','How do I review student evidence?']
+      :['How do I submit evidence?','What are my active goals?','How do points and the store work?'];
+    prompts.forEach(txt=>{
+      const b=document.createElement('button'); b.type='button'; b.textContent=txt;
+      b.addEventListener('click',()=>{const inp=el('as-input');if(inp){inp.value=txt;inp.focus();}});
+      quick.appendChild(b);
+    });
+  }
+  if(st){
+    st.className='as-status';
+    if(typeof window!=='undefined'&&window.location.protocol==='file:'){
+      st.classList.add('as-warn');
+      st.textContent='Local file: APIs are not available. Deploy or run a dev server for live AI; offline tips still work below.';
+    } else {
+      st.textContent='Live AI replies when /api/assistant-chat is available; otherwise Credence uses offline coaching.';
+    }
+  }
+  thread.innerHTML='';
+  if(!Array.isArray(state.assistantMessages) || state.assistantMessages.length===0){
+    state.assistantMessages=[{role:'assistant',content:isInst
+      ?'Hi! I’m Credence. Ask about hub codes, publishing goals, or reviewing class progress — I’ll suggest, you decide.'
+      :'Hi! I’m Credence. Ask about your goals, evidence, or points — I’m here to support, not grade.'}];
+  }
+  state.assistantMessages.forEach(m=>{
+    appendChatBubble(thread, m.role, m.content);
+  });
+  thread.scrollTop=thread.scrollHeight;
+}
+
+async function sendCredenceAssistant(){
+  const input=el('as-input');
+  if(!input) return;
+  const text=input.value.trim();
+  if(!text) return;
+  input.value='';
+  if(!Array.isArray(state.assistantMessages)) state.assistantMessages=[];
+
+  state.assistantMessages.push({role:'user',content:text});
+  const thread=el('as-thread');
+  appendChatBubble(thread,'user',text);
+  const loadingWrap=document.createElement('div');
+  loadingWrap.className='chat-msg assistant assistant-loading';
+  loadingWrap.innerHTML=`<div class="chat-bubble">Thinking…</div>`;
+  thread.appendChild(loadingWrap);
+  thread.scrollTop=thread.scrollHeight;
+
+  const context=getCredenceAssistantContext();
+  try{
+    const r=await fetch(apiUrl('/api/assistant-chat'),{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({role:state.role,context,messages:state.assistantMessages}),
+    });
+    const raw=await r.text();
+    let j=null;
+    try{ j=raw?JSON.parse(raw):null; }catch(_){ j=null; }
+    if(r.ok&&j){
+      const reply=String(j.reply||j.text||'Credence is ready to help.');
+      loadingWrap.remove();
+      state.assistantMessages.push({role:'assistant',content:reply});
+      appendChatBubble(thread,'assistant',reply);
+      if(Array.isArray(j.recommendations)&&j.recommendations.length){
+        const meta=document.createElement('div');
+        meta.className='credence-suggest-row';
+        j.recommendations.slice(0,5).forEach(x=>{
+          const pill=document.createElement('div');
+          pill.className='credence-suggest-pill';
+          pill.textContent=String(x);
+          meta.appendChild(pill);
+        });
+        thread.appendChild(meta);
+      }
+      thread.scrollTop=thread.scrollHeight;
+      return;
+    }
+  }catch(e){}
+
+  loadingWrap.remove();
+  const fallback=CredenceAI.assistantReplyLocal(state.role,context,text);
+  state.assistantMessages.push({role:'assistant',content:fallback});
+  appendChatBubble(thread,'assistant',fallback);
+  thread.scrollTop=thread.scrollHeight;
+}
+
+// Assistant wiring (safe to call even if elements are missing)
+if(el('as-send-btn')){
+  el('as-send-btn').addEventListener('click',()=>sendCredenceAssistant());
+}
+if(el('as-input')){
+  el('as-input').addEventListener('keydown',ev=>{
+    if(ev.key==='Enter'&&!ev.shiftKey){ ev.preventDefault(); sendCredenceAssistant(); }
+  });
+}
+if(el('as-clear-btn')){
+  el('as-clear-btn').addEventListener('click',()=>{
+    state.assistantMessages=[];
+    renderAssistant();
+    showToast('Chat cleared.','info');
+  });
+}
+
+// ── HUB DETAIL ──
+function getWeekCountdown(){
+  const now=new Date();
+  const day=now.getDay(); // 0=Sun,1=Mon...5=Fri,6=Sat
+  // Week runs Mon(1)–Sat(6); calculate end of Saturday 23:59:59 this week
+  const isWeekend=day===0;
+  let msLeft=0;
+  if(!isWeekend){
+    // End of Saturday = days until Saturday end
+    const daysUntilSatEnd=6-day;
+    const endOfSat=new Date(now);
+    endOfSat.setDate(now.getDate()+daysUntilSatEnd);
+    endOfSat.setHours(23,59,59,999);
+    msLeft=endOfSat-now;
+  }
+  const totalMs=6*24*60*60*1000; // Mon–Sat total
+  const elapsed=totalMs-msLeft;
+  const pct=isWeekend?100:Math.min(100,Math.round((elapsed/totalMs)*100));
+  const daysLeft=isWeekend?0:Math.floor(msLeft/(1000*60*60*24));
+  const hoursLeft=isWeekend?0:Math.floor((msLeft%(1000*60*60*24))/(1000*60*60));
+  const isRed=!isWeekend&&(daysLeft<2||(daysLeft===1));
+  const color=isWeekend?'var(--muted)':isRed?'var(--red)':'var(--grn)';
+  let label;
+  if(isWeekend) label='Weekend';
+  else if(daysLeft===0) label=`${hoursLeft}h left`;
+  else label=`${daysLeft}d ${hoursLeft}h left`;
+  return {pct,color,label};
+}
+
+function openHubDetail(hubId){
+  const hub=state.hubs.find(h=>h.id===hubId); if(!hub) return;
+  el('hd-name').textContent=hub.name;
+  el('hd-goal').textContent=hub.goal;
+  const hideGradeInBanner=hub.name==='Environmental Club'||hub.name==='Community Service Club';
+  el('hd-meta').textContent=hideGradeInBanner
+    ?`${hub.teacher} · ${hub.students} students`
+    :`${hub.teacher}${hub.grade?` · Grade ${hub.grade}`:''} · ${hub.students} students`;
+  el('hd-card-name').textContent=hub.name;
+  el('hd-card-goal').textContent=hub.goal;
+
+  // Banner image
+  const bannerBg=document.querySelector('#hub-detail-banner .hub-banner-bg');
+  if(hub.bannerImg){bannerBg.style.backgroundImage=`url(${hub.bannerImg})`;bannerBg.style.backgroundSize='cover';bannerBg.style.backgroundPosition='center';}
+  else{bannerBg.style.backgroundImage='';bannerBg.style.background='';}
+
+  // Show/hide edit button and hub code
+  const editBtn=el('hub-banner-edit-btn');
+  const codeRow=el('hub-code-row');
+  if(state.role==='instructor'){
+    editBtn.classList.remove('hidden');
+    if(hub.code){codeRow.classList.remove('hidden');el('hub-code-display').textContent=hub.code;}
+    else codeRow.classList.add('hidden');
+  } else {
+    editBtn.classList.add('hidden');
+    codeRow.classList.add('hidden');
+  }
+
+  // Week countdown timer
+  const wt=getWeekCountdown();
+  const timerHTML=`<div class="week-timer">
+    <span class="wt-label">Week</span>
+    <div class="wt-bar-wrap"><div class="wt-bar" style="width:${wt.pct}%;background:${wt.color};"></div></div>
+    <span class="wt-val" style="color:${wt.color};">${wt.label}</span>
+  </div>`;
+
+  // Progress area
+  const pa=el('hd-prog-area');
+  if(state.role==='student'){
+    const weekPct=hub.myProgress||75;
+    pa.innerHTML=timerHTML+`<div style="display:flex;align-items:center;gap:.7rem;">
+      <div style="font-size:.72rem;color:var(--muted);width:70px;flex-shrink:0;font-weight:600;">Hub Total</div>
+      <div class="prog-track" style="flex:1;"><div class="prog-fill prog-fill-hub" style="width:${hub.progress}%;"></div></div>
+      <div style="font-family:'DM Sans',sans-serif;font-weight:700;font-size:.78rem;color:var(--amb);width:34px;text-align:right;">${hub.progress}%</div>
+    </div>`;
+  } else {
+    pa.innerHTML=timerHTML+`<div class="hbc-prog-row"><div class="prog-track"><div class="prog-fill" style="width:${hub.progress}%;"></div></div><div class="hbc-pct">${hub.progress}%</div></div>`;
+  }
+
+  renderHubDetailProg(hub);
+  renderHubDetailPub();
+  renderHubDetailHist();
+  setupTabs('hub-detail-tabs',['hd-prog','hd-pub','hd-hist']);
+  navigateTo('hub-detail');
+  setTimeout(applyProfilePhoto,0);
+}
+el('hub-back-btn').addEventListener('click',()=>navigateTo('hub'));
+el('hub-banner-edit-btn').addEventListener('click',()=>{
+  openModal('Edit Hub Banner',`
+    <div class="photo-upload-area" id="banner-upload-area">
+      <input type="file" accept="image/*" id="banner-file-input" onchange="previewBannerUpload(this)">
+      <div class="pu-icon">${S.upload}</div>
+      <div class="pu-txt">Upload banner image</div>
+      <div class="pu-sub">Choose from your library or take a photo</div>
+      <img class="photo-preview" id="banner-preview-img">
+    </div>
+    <button class="btn btn-primary btn-sm" style="width:20%;justify-content:center;margin-top:.75rem;" id="banner-save-btn">${S.check} Apply Banner</button>`);
+  setTimeout(()=>{
+    el('banner-save-btn').addEventListener('click',()=>{
+      const file=el('banner-file-input').files[0];
+      if(!file){showToast('Please select an image first.','error');return;}
+      const r=new FileReader();
+      r.onload=e=>{
+        const bannerBg=document.querySelector('#hub-detail-banner .hub-banner-bg');
+        bannerBg.style.backgroundImage=`url(${e.target.result})`;
+        bannerBg.style.backgroundSize='cover';bannerBg.style.backgroundPosition='center';
+        closeModal();showToast('Banner updated!');
+      };r.readAsDataURL(file);
+    });
+  },50);
+});
+function previewBannerUpload(input){
+  if(input.files&&input.files[0]){const r=new FileReader();r.onload=e=>{const img=el('banner-preview-img');img.src=e.target.result;img.style.display='block';};r.readAsDataURL(input.files[0]);}
+}
+
+el('hub-code-copy-btn').addEventListener('click',()=>{
+  const code=el('hub-code-display').textContent;
+  if(navigator.clipboard){navigator.clipboard.writeText(code).then(()=>showToast('Hub code copied!','info'));}
+  else{showToast('Code: '+code,'info');}
+});
+
+function renderHubDetailProg(hub){
+  const c=el('hd-prog-content');
+  if(state.role==='student'){
+    const weekPct=hub.myProgress||75;
+    const periods=[{l:'Weekly',p:weekPct},{l:'Monthly',p:Math.round(weekPct*.92)},{l:'Quarterly',p:Math.round(weekPct*.82)},{l:'Semester',p:Math.round(weekPct*.72)}];
+    const circumference=138;
+    // Distributed quota
+    const perStudent=hub.goalTarget&&hub.students>0?Math.ceil(hub.goalTarget/hub.students):null;
+    const done=perStudent?Math.round(perStudent*(weekPct/100)):null;
+    const quotaLine=perStudent?`<div style="font-size:.74rem;color:var(--muted);margin-top:.18rem;">Your share: <b style="color:var(--blue2);">${done} / ${perStudent} ${hub.goalUnit||'items'}</b></div>`:'';
+    c.innerHTML=`
+      <div class="circle-row">${periods.map(pr=>{
+        const offset=circumference-(circumference*pr.p/100);
+        return `<div class="circle-cell">
+          <div class="circle-sm">
+            <svg viewBox="0 0 52 52"><circle class="c-bg" cx="26" cy="26" r="22"/><circle class="c-fg" cx="26" cy="26" r="22" stroke-dashoffset="${offset}"/></svg>
+            <div class="c-val">${pr.p}%</div>
+          </div>
+          <div class="circle-lbl">${pr.l}</div>
+        </div>`;
+      }).join('')}</div>
+      <div style="background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);padding:1rem 1.2rem;margin-top:1rem;box-shadow:var(--sh-sm);">
+        <div style="font-family:'DM Sans',sans-serif;font-weight:700;font-size:.76rem;color:var(--txt2);margin-bottom:.65rem;letter-spacing:.02em;">MY PROGRESSION</div>
+        <div style="display:flex;align-items:center;gap:.7rem;margin-bottom:.45rem;">
+          <div style="font-size:.72rem;color:var(--muted);width:70px;flex-shrink:0;">My Progress</div>
+          <div class="prog-track" style="flex:1;height:8px;"><div class="prog-fill" style="width:${weekPct}%;"></div></div>
+          <div style="font-family:'DM Sans',sans-serif;font-weight:700;font-size:.8rem;color:var(--blue2);width:34px;text-align:right;">${weekPct}%</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:.7rem;">
+          <div style="font-size:.72rem;color:var(--muted);width:70px;flex-shrink:0;">Hub Total</div>
+          <div class="prog-track" style="flex:1;height:8px;"><div class="prog-fill prog-fill-hub" style="width:${hub.progress}%;"></div></div>
+          <div style="font-family:'DM Sans',sans-serif;font-weight:700;font-size:.8rem;color:var(--amb);width:34px;text-align:right;">${hub.progress}%</div>
+        </div>
+        ${quotaLine}
+      </div>`;
+  } else {
+    // Teacher: clickable student rows with inline popup
+    c.innerHTML=`<div class="student-list" id="stu-prog-list"></div>`;
+    const list=el('stu-prog-list');
+    state.students.forEach((s,idx)=>{
+      const hasSub=!!s.submission;
+      const rowWrap=document.createElement('div'); rowWrap.style.cssText='display:flex;flex-direction:column;margin-bottom:.35rem;';
+      rowWrap.innerHTML=`
+        <div class="student-row" data-stu-id="${s.id}" style="cursor:pointer;border-radius:var(--r1) var(--r1) ${hasSub?'0 0':'var(--r1) var(--r1)'};">
+          <div class="stu-av">${s.initials}</div>
+          <div class="stu-name">${s.name}</div>
+          <div class="stu-prog"><div class="prog-track"><div class="prog-fill stu-fill-${s.id}" style="width:${s.progress}%;"></div></div><div class="stu-pct stu-pct-${s.id}">${s.progress}%</div></div>
+          <div class="stu-pts">${s.pts} pts</div>
+          <div style="display:flex;align-items:center;gap:.3rem;flex-shrink:0;">
+            ${hasSub?`<span style="width:6px;height:6px;border-radius:50%;background:var(--grn);display:inline-block;" title="Has submission"></span>`:`<span style="width:6px;height:6px;border-radius:50%;background:var(--border2);display:inline-block;" title="No submission"></span>`}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="11" height="11" style="color:var(--muted);transition:transform .2s;" class="stu-chev-${s.id}"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <div class="stu-popup" id="stu-pop-${s.id}" style="border-radius:0 0 var(--r1) var(--r1);border-top:none;">
+          <!-- Submission evidence -->
+          <div style="width:100%;margin-bottom:.6rem;">
+            <div style="font-size:.68rem;font-weight:700;color:var(--txt2);letter-spacing:.05em;text-transform:uppercase;margin-bottom:.4rem;">Submitted Evidence</div>
+            ${hasSub?`
+            <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r1);padding:.6rem .8rem;display:flex;align-items:flex-start;gap:.65rem;">
+              <div style="width:28px;height:28px;border-radius:6px;background:rgba(110,231,183,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--grn);">${S.check}</div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:.74rem;font-weight:600;color:var(--txt);margin-bottom:.12rem;line-height:1.35;">${s.submission.note}</div>
+                <div style="font-size:.64rem;color:var(--muted);">${s.submission.time}</div>
+                ${s.submission.aiAnalysis?`
+                  <div style="margin-top:.55rem;font-size:.68rem;color:var(--txt2);line-height:1.45;">
+                    <b>Credence suggestion:</b> ${s.submission.aiAnalysis.estimatedPct}% · confidence ${(s.submission.aiAnalysis.confidence*100).toFixed(0)}%
+                  </div>
+                `:''}
+              </div>
+            </div>
+            <!-- Submitted photo preview (read-only for teacher) -->
+            <div id="stu-img-preview-wrap-${s.id}" style="margin-top:.4rem;display:${s.submission.imgSrc?'block':'none'};">
+              <img id="stu-img-preview-${s.id}" src="${s.submission.imgSrc||''}" style="width:100%;max-height:180px;object-fit:cover;border-radius:var(--r1);border:1px solid var(--border);">
+            </div>
+            <div id="stu-no-photo-${s.id}" style="margin-top:.4rem;display:${s.submission.imgSrc?'none':'flex'};align-items:center;gap:.45rem;padding:.38rem .7rem;border:1.5px dashed var(--border2);border-radius:var(--r1);background:var(--surf2);">
+              <span style="color:var(--muted);flex-shrink:0;">${S.eye}</span>
+              <span style="font-size:.7rem;color:var(--muted);">No photo attached to this submission</span>
+            </div>`:`
+            <div style="background:var(--bg2);border:1px dashed var(--border2);border-radius:var(--r1);padding:.55rem .8rem;display:flex;align-items:center;gap:.55rem;color:var(--muted);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="14" height="14"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span style="font-size:.72rem;">No evidence submitted yet.</span>
+            </div>`}
+          </div>
+          <!-- Actions -->
+          <div style="width:100%;background:var(--surf2);border:1px solid var(--border);border-radius:var(--r1);padding:.6rem .75rem;">
+            <div style="font-size:.68rem;font-weight:700;color:var(--txt2);letter-spacing:.05em;text-transform:uppercase;margin-bottom:.45rem;">Progress Review</div>
+            <div style="display:flex;align-items:center;gap:.5rem;">
+              <div style="font-size:.7rem;color:var(--muted);flex-shrink:0;">Set %</div>
+              <input type="number" id="stu-manual-pct-${s.id}" placeholder="0–100" min="0" max="100" style="width:84px;padding:.28rem .45rem;font-size:.72rem;text-align:center;flex-shrink:0;">
+              <button class="btn btn-primary btn-sm" data-stu="${s.id}" data-action="approve-prog" style="width:15%;justify-content:center;white-space:nowrap;">${S.check} Approve</button>
+              <button class="btn btn-ghost btn-sm" data-stu="${s.id}" data-action="revoke-prog" style="color:var(--red);border-color:rgba(252,165,165,.25);white-space:nowrap;">Revoke</button>
+            </div>
+            ${s.submission.aiAnalysis?`
+              <div style="margin-top:.55rem;display:flex;align-items:center;gap:.5rem;">
+                <button class="btn btn-outline btn-sm" style="white-space:nowrap;" data-stu="${s.id}" data-action="apply-ai-pct">${S.bolt} Apply Credence</button>
+                <span style="font-size:.68rem;color:var(--muted);">Instructors can edit before approving.</span>
+              </div>
+            `:''}
+          </div>
+        </div>`;
+      const row=rowWrap.querySelector('.student-row');
+      row.addEventListener('click',()=>{
+        const pop=el(`stu-pop-${s.id}`);
+        const chev=rowWrap.querySelector(`.stu-chev-${s.id}`);
+        const isOpen=pop.classList.contains('open');
+        list.querySelectorAll('.stu-popup').forEach(p=>p.classList.remove('open'));
+        list.querySelectorAll('.student-row').forEach(r=>r.classList.remove('popup-open'));
+        list.querySelectorAll('[class*="stu-chev-"]').forEach(ch=>ch.style.transform='');
+        if(!isOpen){
+          pop.classList.add('open');row.classList.add('popup-open');chev.style.transform='rotate(180deg)';
+          // Refresh photo from live state (student may have submitted during session)
+          const liveStu=state.students.find(x=>x.id===s.id);
+          if(liveStu&&liveStu.submission&&liveStu.submission.imgSrc){
+            const wrap=document.getElementById(`stu-img-preview-wrap-${s.id}`);
+            const img=document.getElementById(`stu-img-preview-${s.id}`);
+            const noPhoto=document.getElementById(`stu-no-photo-${s.id}`);
+            if(img) img.src=liveStu.submission.imgSrc;
+            if(wrap) wrap.style.display='block';
+            if(noPhoto) noPhoto.style.display='none';
+          }
+        }
+      });
+      list.appendChild(rowWrap);
+    });
+    // Approve/revoke handlers
+    c.querySelectorAll('[data-action="approve-prog"]').forEach(btn=>{
+      btn.addEventListener('click',e=>{
+        e.stopPropagation();
+        const stuId=Number(btn.dataset.stu);
+        const inp=el(`stu-manual-pct-${stuId}`);
+        const pct=parseInt(inp.value);
+        const stu=state.students.find(x=>x.id===stuId);
+        if(!stu) return;
+        if(!isNaN(pct)&&pct>=0&&pct<=100){stu.progress=pct;}
+        else{stu.progress=Math.min(100,stu.progress+10);}
+        // update UI
+        const fillEl=c.querySelector(`.stu-fill-${stuId}`);
+        const pctEl=c.querySelector(`.stu-pct-${stuId}`);
+        if(fillEl) fillEl.style.width=stu.progress+'%';
+        if(pctEl) pctEl.textContent=stu.progress+'%';
+        inp.value='';
+        showToast(`${stu.name}'s progress updated to ${stu.progress}%.`);
+        // Keep hub progression in sync (aggregate from student contributions)
+        const newHubPct=Math.round(state.students.reduce((a,x)=>a+x.progress,0)/Math.max(1,state.students.length));
+        hub.progress=newHubPct;
+        const pa=el('hd-prog-area');
+        if(pa){
+          const hubFill=pa.querySelector('.hbc-prog-row .prog-fill');
+          const hubPct=pa.querySelector('.hbc-pct');
+          if(hubFill) hubFill.style.width=newHubPct+'%';
+          if(hubPct) hubPct.textContent=newHubPct+'%';
+        }
+      });
+    });
+    c.querySelectorAll('[data-action="revoke-prog"]').forEach(btn=>{
+      btn.addEventListener('click',e=>{
+        e.stopPropagation();
+        const stuId=Number(btn.dataset.stu);
+        const stu=state.students.find(x=>x.id===stuId);
+        if(!stu) return;
+        stu.progress=Math.max(0,stu.progress-10);
+        const fillEl=c.querySelector(`.stu-fill-${stuId}`);
+        const pctEl=c.querySelector(`.stu-pct-${stuId}`);
+        if(fillEl) fillEl.style.width=stu.progress+'%';
+        if(pctEl) pctEl.textContent=stu.progress+'%';
+        showToast(`${stu.name}'s progress revoked to ${stu.progress}%.`,'info');
+        // Keep hub progression in sync (aggregate from student contributions)
+        const newHubPct=Math.round(state.students.reduce((a,x)=>a+x.progress,0)/Math.max(1,state.students.length));
+        hub.progress=newHubPct;
+        const pa=el('hd-prog-area');
+        if(pa){
+          const hubFill=pa.querySelector('.hbc-prog-row .prog-fill');
+          const hubPct=pa.querySelector('.hbc-pct');
+          if(hubFill) hubFill.style.width=newHubPct+'%';
+          if(hubPct) hubPct.textContent=newHubPct+'%';
+        }
+      });
+    });
+    c.querySelectorAll('[data-action="apply-ai-pct"]').forEach(btn=>{
+      btn.addEventListener('click',e=>{
+        e.stopPropagation();
+        const stuId=Number(btn.dataset.stu);
+        const stu=state.students.find(x=>x.id===stuId);
+        if(!stu || !stu.submission || !stu.submission.aiAnalysis) return;
+        const suggested=Number(stu.submission.aiAnalysis.estimatedPct);
+        if(isNaN(suggested) || suggested<0 || suggested>100) return;
+        stu.progress=suggested;
+        const fillEl=c.querySelector(`.stu-fill-${stuId}`);
+        const pctEl=c.querySelector(`.stu-pct-${stuId}`);
+        if(fillEl) fillEl.style.width=stu.progress+'%';
+        if(pctEl) pctEl.textContent=stu.progress+'%';
+        const inp=el(`stu-manual-pct-${stuId}`);
+        if(inp) inp.value=stu.progress;
+        showToast(`${stu.name}'s progress applied from Credence (${stu.progress}%).`,'info');
+        // Keep hub progression in sync (aggregate from student contributions)
+        const newHubPct=Math.round(state.students.reduce((a,x)=>a+x.progress,0)/Math.max(1,state.students.length));
+        hub.progress=newHubPct;
+        const pa=el('hd-prog-area');
+        if(pa){
+          const hubFill=pa.querySelector('.hbc-prog-row .prog-fill');
+          const hubPct=pa.querySelector('.hbc-pct');
+          if(hubFill) hubFill.style.width=newHubPct+'%';
+          if(hubPct) hubPct.textContent=newHubPct+'%';
+        }
+      });
+    });
+  }
+}
+
+
+function renderHubDetailPub(){
+  const c=el('hd-pub-content');
+  if(state.role==='instructor'){
+    c.innerHTML=`
+      <h4 style="font-family:'DM Sans',sans-serif;font-weight:700;margin-bottom:.9rem;color:var(--red);font-size:.88rem;">Needs Revision</h4>
+      <div class="goal-card" style="margin-bottom:1.25rem;">
+        <div class="gc-top"><div><div class="gc-title">Waterway Cleanup Report</div><div class="gc-desc">Submitted by Liam Smith — awaiting review.</div></div><span class="badge badge-revision">Needs Revision</span></div>
+        <div style="display:flex;gap:.5rem;margin-top:.85rem;">
+          <button class="btn btn-primary btn-sm" id="approve-goal-btn">${S.check} Move to Approval</button>
+          <button class="btn btn-outline btn-sm" id="reject-goal-btn">Send Back</button>
+        </div>
+      </div>
+      <h4 style="font-family:'DM Sans',sans-serif;font-weight:700;margin-bottom:.9rem;color:var(--vio);font-size:.88rem;">Approval Stage</h4>
+      <div class="ai-recommendation" style="margin-bottom:1rem;">
+        <div class="ai-recommendation-hdr"><span class="badge badge-ai-suggested">Credence suggested goal</span><span class="badge badge-medium">Medium</span></div>
+        <div style="font-size:.78rem;color:var(--txt2);line-height:1.55;">Suggest activating as a <b>medium</b> goal (observation + photo) based on class completion variance. Instructors keep final difficulty and points.</div>
+        <div class="ai-basis"><b>Suggestion basis:</b> Similar hubs averaged 68% completion last cycle; pair with rubric checklist.</div>
+      </div>
+      <div class="goal-card">
+        <div class="gc-top"><div><div class="gc-title">Biodiversity Log Entry</div><div class="gc-desc">Ready for instructor setup before activation.</div></div><span class="badge badge-approval">In Approval</span></div>
+        <div style="margin-top:.9rem;">
+          <div class="form-group"><label class="form-lbl">Project Name</label><input type="text" id="apr-name" value="Biodiversity Log Entry" placeholder="Edit project name..."></div>
+          <div class="form-group"><label class="form-lbl">Difficulty</label><select id="apr-diff" onchange="updateAprPts(this)"><option value="Easy">Easy — 10 pts max</option><option value="Medium">Medium — 25 pts max</option><option value="Hard">Hard — 50 pts max</option></select></div>
+          <div class="form-group"><label class="form-lbl">Point Value <span id="apr-pts-hint" style="color:var(--muted);font-weight:400;">(max 10)</span></label><input type="number" id="apr-pts" placeholder="e.g. 10" max="10"></div>
+          <div class="form-group"><label class="form-lbl">Description</label><textarea rows="2" id="apr-desc" placeholder="Describe the goal..."></textarea></div>
+          <button class="btn btn-primary btn-sm" id="activate-goal-btn">${S.bolt} Activate Goal</button>
+        </div>
+      </div>`;
+    setTimeout(()=>{
+      el('approve-goal-btn').addEventListener('click',()=>showToast('Goal moved to approval stage!'));
+      el('activate-goal-btn').addEventListener('click',()=>{
+        const name=el('apr-name').value.trim()||'Goal';
+        showToast(`"${name}" activated!`);
+      });
+      el('reject-goal-btn').addEventListener('click',()=>{
+        openModal('Send Back for Revision',`
+          <p style="color:var(--muted);font-size:.82rem;margin-bottom:1rem;">Explain why this goal needs revision.</p>
+          <div class="form-group"><label class="form-lbl">Reason</label><textarea rows="4" id="m-rej-reason" placeholder="Your feedback..."></textarea></div>
+          <button class="btn btn-primary" style="width:100%;justify-content:center;" id="m-rej-sub">Send Feedback</button>`);
+        setTimeout(()=>{el('m-rej-sub').addEventListener('click',()=>{closeModal();showToast('Feedback sent.','info');});},50);
+      });
+    },50);
+  } else {
+    c.innerHTML=`
+      <div class="goal-card">
+        <div class="gc-top"><div><div class="gc-title">Waterway Cleanup Report</div><div class="gc-desc">Suggested by you — currently under instructor review.</div></div><span class="badge badge-pending">Pending</span></div>
+      </div>
+      <div style="margin-top:1.25rem;"><button class="btn btn-primary" id="suggest-goal-btn">${S.bolt} Suggest a Goal</button></div>`;
+    setTimeout(()=>{
+      el('suggest-goal-btn').addEventListener('click',()=>{
+        openModal('Suggest a Goal',`
+          <div class="form-group"><label class="form-lbl">Goal Title</label><input type="text" id="m-sg-title" placeholder="e.g. Beach Cleanup Drive"></div>
+          <div class="form-group"><label class="form-lbl">Description</label><textarea rows="3" id="m-sg-desc" placeholder="What would participants do?"></textarea></div>
+          <button class="btn btn-primary" style="width:100%;justify-content:center;" id="m-sg-sub">Submit Suggestion</button>`);
+        setTimeout(()=>{el('m-sg-sub').addEventListener('click',()=>{closeModal();showToast('Goal suggestion submitted!');});},50);
+      });
+    },50);
+  }
+}
+
+function renderHubDetailHist(){
+  el('hd-hist-content').innerHTML=`<div class="act-feed">
+    <div class="act-item"><div class="act-dot" style="background:rgba(52,211,153,.12);color:var(--grn);">${S.trophy}</div><div><div class="act-txt">Week of Feb 10 — Bottle Drive — <b>67% class completion</b></div><div class="act-time">Closed Sun Feb 16</div></div></div>
+    <div class="act-item"><div class="act-dot" style="background:rgba(56,189,248,.12);color:var(--blue);">${S.leaf}</div><div><div class="act-txt">Week of Feb 3 — Tree Planting — <b>80% class completion</b></div><div class="act-time">Closed Sun Feb 9</div></div></div>
+    <div class="act-item"><div class="act-dot" style="background:rgba(251,191,36,.12);color:var(--amb);">${S.eye}</div><div><div class="act-txt">Week of Jan 27 — Water Conservation — <b>55% class completion</b></div><div class="act-time">Closed Sun Feb 2</div></div></div>
+  </div>`;
+}
+
+// ── STORE ──
+function renderStore(){
+  const isStudent=state.role==='student';
+  // Hide create button for students
+  const createBtn=el('store-create-btn');
+  if(createBtn) createBtn.style.display=isStudent?'none':'';
+
+  el('store-grid').innerHTML=state.storeItems.map(item=>{
+    const artContent=item.img
+      ?`<img src="${item.img}" style="width:100%;height:106px;object-fit:cover;display:block;">`
+      :`${storeArtSVG(item)}`;
+    return `<div class="store-card">
+      <div class="store-art">${artContent}</div>
+      <div class="store-body">
+        <div class="sc-name">${item.name}</div>
+        <div class="sc-desc">${item.desc}</div>
+        <div class="sc-bottom">
+          <div class="sc-pts-wrap">
+            <div class="sc-pts">${S.star} ${item.cost} pts</div>
+            <div class="sc-qty">${item.qty} left · ${item.type}</div>
+          </div>
+          ${isStudent
+            ?`<button class="btn btn-primary btn-sm" data-item-id="${item.id}" data-action="buy">${S.cart} Buy</button>`
+            :`<button class="btn btn-outline btn-sm" data-item-id="${item.id}" data-action="edit">${S.edit} Edit</button>`
+          }
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  el('store-grid').querySelectorAll('[data-action="buy"]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const item=state.storeItems.find(i=>i.id===Number(btn.dataset.itemId));
+      if(!item) return;
+      if(state.points<item.cost){showToast(`Need ${item.cost} pts — you have ${state.points}.`,'error');return;}
+      state.points-=item.cost; el('pts-display').textContent=state.points;
+      showToast(`Purchased "${item.name}"! −${item.cost} pts`);
+    });
+  });
+
+  el('store-grid').querySelectorAll('[data-action="edit"]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const item=state.storeItems.find(i=>i.id===Number(btn.dataset.itemId));
+      if(!item) return;
+      openModal(`Edit: ${item.name}`,`
+        <div class="form-group"><label class="form-lbl">Item Name</label><input type="text" id="e-iname" value="${item.name}"></div>
+        <div class="form-group"><label class="form-lbl">Description</label><textarea rows="2" id="e-idesc">${item.desc}</textarea></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;">
+          <div class="form-group"><label class="form-lbl">Cost (pts)</label><input type="number" id="e-icost" value="${item.cost}"></div>
+          <div class="form-group"><label class="form-lbl">Quantity</label><input type="number" id="e-iqty" value="${item.qty}"></div>
+        </div>
+        <div class="form-group"><label class="form-lbl">Item Photo <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+          <label for="e-iimg" class="ev-upload-zone" id="e-iimg-zone" style="cursor:pointer;display:flex;">
+            <input type="file" accept="image/*" id="e-iimg" style="display:none;" onchange="handleEditItemPhoto(this)">
+            <div class="ev-icon">${S.upload}</div>
+            <div class="ev-file-name" id="e-iimg-lbl">${item.img?'Photo set — tap to change':'Tap to add a photo'}</div>
+          </label>
+          <img id="e-iimg-preview" src="${item.img||''}" style="width:100%;max-height:120px;object-fit:cover;border-radius:var(--r1);margin-top:.45rem;border:1px solid var(--border);display:${item.img?'block':'none'};">
+        </div>
+        <div style="display:flex;gap:.5rem;margin-top:.5rem;align-items:center;">
+          <button class="btn btn-primary btn-sm" style="width:20%;justify-content:center;" id="e-isub">${S.check} Save Changes</button>
+          <button class="btn btn-ghost btn-sm" id="e-ideleteitem" style="color:var(--red);border-color:rgba(252,165,165,.3);">Remove</button>
+        </div>`);
+      setTimeout(()=>{
+        state._editItemPendingImg=null; // reset for this edit session
+        el('e-isub').addEventListener('click',()=>{
+          item.name=el('e-iname').value.trim()||item.name;
+          item.desc=el('e-idesc').value.trim()||item.desc;
+          const c=parseInt(el('e-icost').value), q=parseInt(el('e-iqty').value);
+          if(!isNaN(c)) item.cost=c; if(!isNaN(q)) item.qty=q;
+          if(state._editItemPendingImg){item.img=state._editItemPendingImg;state._editItemPendingImg=null;}
+          closeModal(); renderStore(); showToast('Item updated!');
+        });
+        el('e-ideleteitem').addEventListener('click',()=>{
+          state.storeItems=state.storeItems.filter(i=>i.id!==item.id);
+          closeModal(); renderStore(); showToast('Item removed.','info');
+        });
+      },50);
+    });
+  });
+
+  const btn=el('store-create-btn');
+  if(btn) btn.onclick=null;
+  if(btn) btn.addEventListener('click',openCreateItemModal);
+}
+
+function handleEditItemPhoto(input){
+  if(!input.files||!input.files[0]) return;
+  const f=input.files[0];
+  const lbl=document.getElementById('e-iimg-lbl');
+  const prev=document.getElementById('e-iimg-preview');
+  if(lbl) lbl.textContent=f.name;
+  const r=new FileReader();
+  r.onload=e=>{
+    state._editItemPendingImg=e.target.result;
+    if(prev){prev.src=e.target.result;prev.style.display='block';}
+  };
+  r.readAsDataURL(f);
+}
+
+function openCreateItemModal(){
+  openModal('Create Store Item',`
+    <div class="form-group"><label class="form-lbl">Item Name</label><input type="text" id="m-iname" placeholder="e.g. Free Reading Day"></div>
+    <div class="form-group"><label class="form-lbl">Description</label><textarea rows="2" id="m-idesc" placeholder="What do students get?"></textarea></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;">
+      <div class="form-group"><label class="form-lbl">Cost (pts)</label><input type="number" id="m-icost" placeholder="100"></div>
+      <div class="form-group"><label class="form-lbl">Quantity</label><input type="number" id="m-iqty" placeholder="10"></div>
+    </div>
+    <div class="form-group"><label class="form-lbl">Type</label><select id="m-itype"><option value="individual">Individual</option><option value="team">Team</option></select></div>
+    <div class="form-group"><label class="form-lbl">Item Photo <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+      <div class="photo-upload-area">
+        <input type="file" accept="image/*" id="m-iimg" onchange="previewCreateItem(this)">
+        <div class="pu-icon">${S.upload}</div>
+        <div class="pu-txt">Upload item image</div>
+        <div class="pu-sub">Choose from library or take photo</div>
+        <img class="photo-preview" id="m-iimg-preview">
+      </div>
+    </div>
+    <button class="btn btn-primary btn-sm" style="width:25%;justify-content:center;margin-top:.2rem;" id="m-isub">${S.plus} Publish Item</button>`);
+  setTimeout(()=>{
+    el('m-isub').addEventListener('click',()=>{
+      const name=el('m-iname').value.trim(),cost=parseInt(el('m-icost').value),qty=parseInt(el('m-iqty').value);
+      if(!name||isNaN(cost)||isNaN(qty)){showToast('Fill in all fields.','error');return;}
+      const newItem={id:Date.now(),name,desc:el('m-idesc').value.trim()||'A special reward.',cost,qty,type:el('m-itype').value};
+      const imgFile=el('m-iimg').files[0];
+      if(imgFile){const r=new FileReader();r.onload=e=>{newItem.img=e.target.result;state.storeItems.push(newItem);closeModal();renderStore();showToast(`"${name}" added to the store!`);};r.readAsDataURL(imgFile);}
+      else{state.storeItems.push(newItem);closeModal();renderStore();showToast(`"${name}" added to the store!`);}
+    });
+  },50);
+}
+function previewCreateItem(input){
+  if(input.files&&input.files[0]){const r=new FileReader();r.onload=e=>{const img=el('m-iimg-preview');img.src=e.target.result;img.style.display='block';};r.readAsDataURL(input.files[0]);}
+}
+
+// TABS
+function setupTabs(barId,contentIds){
+  const bar=el(barId); if(!bar) return;
+  bar.querySelectorAll('.tab-btn').forEach((btn,i)=>{
+    btn.addEventListener('click',()=>{
+      bar.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      contentIds.forEach(id=>{const p=el(`tab-${id}`);if(p) p.classList.remove('active');});
+      const t=el(`tab-${contentIds[i]}`); if(t) t.classList.add('active');
+    });
+  });
+}
+
+el('profile-btn').addEventListener('click',()=>navigateTo('profile'));
+
+// Notification panel
+const notifData=[
+  {txt:'New weekly goal posted: Tree Planting Documentation.',time:'Monday',color:'var(--blue2)'},
+  {txt:'Your Bottle Drive evidence was approved!',time:'Tuesday',color:'var(--grn)'},
+  {txt:'Sofia Garcia purchased Extra Credit Pass.',time:'Tuesday',color:'var(--vio)'},
+];
+function renderNotifPanel(){
+  const list=el('notif-list');
+  if(!notifData.length){list.innerHTML=`<div class="notif-empty">No notifications right now.</div>`;return;}
+  list.innerHTML=notifData.map(n=>`
+    <div class="notif-item">
+      <div class="notif-item-dot" style="background:${n.color};"></div>
+      <div><div class="notif-item-txt">${n.txt}</div><div class="notif-item-time">${n.time}</div></div>
+    </div>`).join('');
+}
+renderNotifPanel();
+let notifOpen=false;
+el('notif-btn').addEventListener('click',(e)=>{
+  e.stopPropagation();
+  notifOpen=!notifOpen;
+  el('notif-panel').classList.toggle('open',notifOpen);
+  if(notifOpen) el('notif-dot').style.display='none';
+});
+el('notif-clear-btn').addEventListener('click',()=>{
+  notifData.length=0; renderNotifPanel();
+});
+document.addEventListener('click',(e)=>{
+  if(notifOpen&&!el('notif-panel').contains(e.target)&&e.target!==el('notif-btn')){
+    notifOpen=false; el('notif-panel').classList.remove('open');
+  }
+});
+
+function updateAprPts(sel){
+  const maxMap={Easy:10,Medium:25,Hard:50};
+  const val=sel.value.split(' ')[0];
+  const m=maxMap[val]||10;
+  const hint=document.getElementById('apr-pts-hint');
+  const inp=document.getElementById('apr-pts');
+  if(hint) hint.textContent=`(max ${m})`;
+  if(inp) inp.max=m;
+}
+
+// Profile photo upload
+el('profile-photo-input').addEventListener('change',function(){
+  if(!this.files||!this.files[0]) return;
+  const r=new FileReader();
+  r.onload=e=>{
+    state.profilePhoto=e.target.result;
+    applyProfilePhoto();
+    showToast('Profile photo updated!');
+  };
+  r.readAsDataURL(this.files[0]);
+});
+
+function applyProfilePhoto(){
+  const src=state.profilePhoto;
+  if(!src) return;
+  const imgTag=`<img src="${src}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block;" alt="Profile">`;
+  // Sidebar avatar
+  const sb=el('sb-initials');
+  if(sb) sb.innerHTML=imgTag;
+  // Profile page big avatar
+  const bigImg=el('profile-av-img');
+  if(bigImg){bigImg.src=src;bigImg.style.display='block';}
+  const bigIcon=el('profile-av-icon');
+  if(bigIcon) bigIcon.style.display='none';
+  // Any element marked as user avatar placeholder
+  document.querySelectorAll('.user-av-replace').forEach(node=>{
+    node.innerHTML=imgTag;
+  });
+}
+
+applyTheme();
+navigateTo('landing',false);
+</script>
+</body>
+</html>
